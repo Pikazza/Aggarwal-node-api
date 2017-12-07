@@ -497,14 +497,20 @@ module.exports = function(router){
 *         type: string
 *       itemDesc: 
 *         type: string
+*       itemImage: 
+*         type: string
 *       price: 
-*         type: string
+*         type: number
+*         format: double
 *       offerPrice: 
-*         type: string
+*         type: number
+*         format: double
 *       gst: 
-*         type: string
+*         type: number
+*         format: double
 *       priceWithGST: 
-*         type: string
+*         type: number
+*         format: double
 *       category1: 
 *         type: string
 *       category2: 
@@ -512,9 +518,9 @@ module.exports = function(router){
 *       category3: 
 *         type: string
 *       category4:
-*         type: number
-*       quantityInStock: 
 *         type: string
+*       quantityInStock: 
+*         type: number
 *       unit:
 *         type: number
 *       unitType:
@@ -539,14 +545,20 @@ module.exports = function(router){
 *         type: string
 *       itemDesc: 
 *         type: string
+*       itemImage: 
+*         type: string
 *       price: 
-*         type: string
+*         type: number
+*         format: double
 *       offerPrice: 
-*         type: string
+*         type: number
+*         format: double
 *       gst: 
-*         type: string
+*         type: number
+*         format: double
 *       priceWithGST: 
-*         type: string
+*         type: number
+*         format: double
 *       category1: 
 *         type: string
 *       category2: 
@@ -554,11 +566,11 @@ module.exports = function(router){
 *       category3: 
 *         type: string
 *       category4:
-*         type: number
+*         type: string
 *       quantityInStock: 
-*         type: string
+*         type: number
 *       unit:
-*         type: string
+*         type: number
 *       unitType:
 *         type: string
 *         default: KILOGRAM

@@ -5,7 +5,7 @@ const roleBasedAccess = require('../config/permission');
 module.exports = function(router) {
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/order:
 *   get:
 *     security:
@@ -55,7 +55,7 @@ module.exports = function(router) {
 		orderController.getOrder),
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/order:
 *   post:
 *     security:
@@ -84,7 +84,7 @@ module.exports = function(router) {
 		orderController.addOrder),
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/order/{orderId}:
 *   put:
 *     security:

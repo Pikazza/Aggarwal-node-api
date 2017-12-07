@@ -13,20 +13,20 @@ module.exports = function(router){
 *     tags:
 *       - Product
 *     description: |
-*                 Returns all generic Product items or single item based on Query parems.
+*                 Returns all generic Product items or single item based on Query params.
 *     produces:
 *       - application/json
 *     parameters:
 *       - name: productId
-*         description: Franchisee's id has to be passed to get the listings of menu items.
+*         description: Product's id has to be passed to get a product sprcfic details.
 *         in: query
 *         required: false
 *         type: integer
 *     responses:
 *       200:
-*         description: Menu object associated with Franchisee
+*         description: It will return Product Details
 *         schema:
-*           $ref: '#/definitions/MenuResponse'
+*           $ref: '#/definitions/Product'
 */
 	router.get('/v1.0/product',
 		productController.get),
@@ -37,12 +37,12 @@ module.exports = function(router){
 *   post:
 *     tags:
 *       - Product
-*     description: Updates list of item's statuses and its prices
+*     description: This service will post new product into DB
 *     produces:
 *       - application/json
 *     parameters:
 *       - name: ProductRequest
-*         description: Object which has array of menu that has to be modified.
+*         description: new Product Deatails has to passed and images has to passed as Base64 format.
 *         in: body
 *         required: true
 *         schema:
@@ -64,17 +64,17 @@ module.exports = function(router){
 *   put:
 *     tags:
 *       - Product
-*     description: Updates list of item's statuses and its prices
+*     description: Updates list of product's details and its prices
 *     produces:
 *       - application/json
 *     parameters:
 *       - name: productId
-*         description: Franchisee's id has to be passed to get the listings of menu items.
+*         description: Product's id to which update will be performed.
 *         in: path
 *         required: true
 *         type: string
 *       - name: Product
-*         description: Object which has array of menu that has to be modified.
+*         description: changed Product Deatails need to passed to get the information updated.
 *         in: body
 *         required: true
 *         schema:

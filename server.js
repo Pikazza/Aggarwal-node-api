@@ -28,7 +28,7 @@ router.use(cors());
 router.options('*', cors());
 
 require('./routes/index')(router);
-require('./routes/party')(router);
+//require('./routes/party')(router);
 require('./routes/customer')(router);
 require('./routes/product')(router);
 require('./routes/category')(router);

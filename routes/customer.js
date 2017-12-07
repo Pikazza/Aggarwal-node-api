@@ -7,7 +7,7 @@ const roleBasedAccess = require('../config/permission');
 module.exports = function(router){
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/customer:
 *   get:
 *     tags:
@@ -34,7 +34,7 @@ module.exports = function(router){
 		customerController.get),
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/customer:
 *   post:
 *     security:
@@ -63,7 +63,7 @@ module.exports = function(router){
 		customerController.add),
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/customer/{customerId}:
 *   put:
 *     security:
@@ -95,7 +95,7 @@ module.exports = function(router){
 		customerController.update),
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/customer/login:
 *   post:
 *     security:
@@ -126,7 +126,7 @@ module.exports = function(router){
 
 /**
 *
-* @swagger
+* @swaggers
 * /v1.0/customer/forgotpassword:
 *   post:
 *     security:
@@ -155,7 +155,7 @@ module.exports = function(router){
 		customerController.forgotPassword),
 /**
 *
-* @swagger
+* @swaggers
 * /v1.0/customer/verifyOtp:
 *   get:
 *     security:

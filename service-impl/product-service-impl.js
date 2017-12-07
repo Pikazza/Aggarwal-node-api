@@ -1,12 +1,14 @@
 'use strict';
 
 const _ = require('lodash');
+
 const product = require('../models/product').Product;
 const productRepository = require('../repository/product-repository'); 
-const franchiseeScheduleRepository = require('../repository/franchisee-schedule-repository');  
-const MenuNotFoundError = require('../exceptions/menu-not-found-error');
-const ScheduleNotFoundError = require('../exceptions/schedule-not-found-error');
+
 const SequenceImpl = require('../service-impl/sequence');
+const apiUtils = require('../util/api-utils');
+ 
+const ProductNotFoundError = require('../exceptions/menu-not-found-error');
 
 module.exports.findProductById = (productId, next) => {
 	productRepository.findProductById(productId, function(err, result) {
@@ -14,7 +16,7 @@ module.exports.findProductById = (productId, next) => {
 			next(err);			
 		}
 		if(!result){
-			next(new MenuNotFoundError("No Product items found for given id"));
+			next(new ProductNotFoundError("No Product items found for given id"+productId));
 		}
 		else{
   			next(null, result);
@@ -26,9 +28,6 @@ module.exports.findAllProduct = (productId, next) => {
 	productRepository.findAll( function(err, result) {
 		if (err){
 			next(err);			
-		}
-		if(!result){
-			next(new MenuNotFoundError("No Product items found for given id"));
 		}
 		else{
   			next(null, result);
@@ -46,6 +45,10 @@ module.exports.create = (productReq, next) => {
 			else{
 				var prod = new product(productReq);
 				prod.itemId=sequenceId;
+				prod.createdOn= new Date();
+				if(productReq.itemImage){
+				prod.itemImage=apiUtils.uploadImage("product_"+sequenceId,productReq.itemImage);
+				}
 				productRepository.create(prod, function(err, result) {
 					if (err){
 						next(err);
@@ -66,20 +69,34 @@ console.log("coming to impl "+productId)
 			next(err);
 		}
 		if(!oneCustomer) {
-			console.log(" no product was found");
+			next(new ProductNotFoundError("No Product items found for given id"+productId));
 		}
 		else if(productId != productReq.itemId){
-			/*next(new PartyNotFoundError("Customer id passed in URL "+customerId+
-			" is not same as Customer id "+customerReq.customerId +" passed in body"));*/
+			next(new ProductNotFoundError("Product id passed in URL "+productId+
+			" is not same as Product id "+productReq.itemId +" passed in body"));
 		}
 		else{
-			let cust = new product(oneCustomer);
-			cust.status=productReq.status;
-			/*if(customerReq.profileImage){
-			var path = apiUtils.uploadImage(cust.firstName+cust.customerId+"_cu_cover",customerReq.profileImage);
-			cust.profileImage=path
-			}*/
-			productRepository.update(cust, function(err, result) {
+			let prod = new product(oneCustomer);
+			prod.itemName=productReq.itemName;
+			prod.itemDesc=productReq.itemDesc;
+			prod.price=productReq.price;
+			prod.offerPrice=productReq.offerPrice;
+			prod.gst=productReq.gst;
+			prod.priceWithGST=productReq.priceWithGST;
+			prod.category1=productReq.category1;
+			prod.category2=productReq.category2;
+			prod.category3=productReq.category3;
+			prod.category4=productReq.category4;
+			prod.quantityInStock=productReq.quantityInStock;
+			prod.unit=productReq.unit;
+			prod.unit=productReq.unit;
+			prod.unitType=productReq.unitType;
+			prod.status=productReq.status;
+
+			if(productReq.itemImage){
+				prod.itemImage=apiUtils.uploadImage("product_"+productId,productReq.itemImage);
+			}
+			productRepository.update(prod, function(err, result) {
 				if(err) {
 					next(err);
 				}

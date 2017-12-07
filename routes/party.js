@@ -7,7 +7,7 @@ const roleBasedAccess = require('../config/permission');
 module.exports = function(router){
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/franchisee:
 *   get:
 *     tags:
@@ -34,7 +34,7 @@ module.exports = function(router){
 		franchiseeController.get),
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/franchisee:
 *   post:
 *     security:
@@ -67,7 +67,7 @@ module.exports = function(router){
 		franchiseeController.add),
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/franchisee/{franchiseeId}:
 *   put:
 *     security:
@@ -100,7 +100,7 @@ module.exports = function(router){
 
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/party/user/login:
 *   post:
 *     security:
@@ -121,7 +121,7 @@ module.exports = function(router){
 		franchiseeController.login),
 
 /**
-* @swagger
+* @swaggers
 * /v2.0/party/user/login:
 *   post:
 *     security:
@@ -152,7 +152,7 @@ module.exports = function(router){
 
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/party/user/forgotpassword:
 *   post:
 *     security:
@@ -181,7 +181,7 @@ module.exports = function(router){
 		franchiseeController.forgotPassword),
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/party/user/verifyOtp:
 *   get:
 *     security:
@@ -215,7 +215,7 @@ module.exports = function(router){
 
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/franchisee/discover:
 *   get:
 *     security:

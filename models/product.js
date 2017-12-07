@@ -5,24 +5,32 @@ const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
 const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER'];
+const statusType = ['SHOW','HIDE'];
 
 let productSchema = new Schema({
       itemId:String,
       itemName:String,
       itemDesc:String,
-      price:String,
-      offerPrice:String,
-      gst:String,
-      priceWithGST:String,
-      status:String,
+      itemImage:String,
+      price:Number,
+      offerPrice:Number,
+      gst:Number,
+      priceWithGST:Number,
+      status:{type: String, enum: statusType},
       category1:String,
       category2:String,
       category3:String,
       category4:String,
-      quantityInStock:String,
-      unit:String,
-      unitType:String,
-      category4:String,
+      quantityInStock:Number,
+      unit:Number,
+      createdOn: {
+          type: Date
+          },
+      modifiedOn: {
+        type: Date, 
+        default: Date.now
+        },
+      unitType:{type: String, enum: unitType},
     },{ collection: 'product' });
 
 let product = mongoose.model("product", productSchema);
