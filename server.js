@@ -20,7 +20,7 @@ app.use(morgan(':remote-addr - :remote-user ":method :url HTTP/:http-version" :s
 { stream: { write: message => logger.info(message.trim()) }}));
 app.use(router);
 
-router.use(bodyParser.json());
+router.use(bodyParser.json({limit: '10mb'}));
 router.use(bodyParser.urlencoded({
 	extended: true
 }));
@@ -28,7 +28,7 @@ router.use(cors());
 router.options('*', cors());
 
 require('./routes/index')(router);
-//require('./routes/party')(router);
+require('./routes/party')(router);
 require('./routes/customer')(router);
 require('./routes/product')(router);
 require('./routes/category')(router);

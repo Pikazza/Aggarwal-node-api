@@ -11,14 +11,14 @@ module.exports.findProductById =  (ptyId, next) => {
 };
 
 module.exports.findAll=  ( next) => {
-	product.findAll({}, function(err, result) {
+	product.find({}, function(err, result) {
 		if (err) next(err);
 		next(null, result);
 	}); 
 };
 
 module.exports.create = (productReq, next) => {
-	product.create(productReq, function(err, result) {
+	product.create(productReq,{new : true}, function(err, result) {
 		if (err)  next(err);
 		next(null, result);
 	});
@@ -31,7 +31,7 @@ module.exports.update = function (productReq, next) {
 			next(null, result);
 		});*/
 
-		product.findOneAndUpdate({"itemId":productReq.itemId},productReq,function(err, result) {
+		product.findOneAndUpdate({"itemId":productReq.itemId},productReq,{new: true},function(err, result) {
 			if (err) {
 				next(err);
 			}  

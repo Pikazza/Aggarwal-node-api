@@ -24,7 +24,7 @@ module.exports.findProductById = (productId, next) => {
 	});		
 };
 
-module.exports.findAllProduct = (productId, next) => {
+module.exports.findAllProduct = ( next) => {
 	productRepository.findAll( function(err, result) {
 		if (err){
 			next(err);			
