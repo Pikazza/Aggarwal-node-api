@@ -7,7 +7,7 @@ const roleBasedAccess = require('../config/permission');
 module.exports = function(router){
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/customer:
 *   get:
 *     tags:
@@ -34,7 +34,7 @@ module.exports = function(router){
 		customerController.get),
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/customer:
 *   post:
 *     security:
@@ -58,12 +58,12 @@ module.exports = function(router){
 *           $ref: '#/definitions/Customer'
 */
 	router.post('/v1.0/customer', 
-		auth.verifyWithBasicAuth, 
-		roleBasedAccess.rolesAllowedForBasic('USER'),
+		//auth.verifyWithBasicAuth, 
+		//roleBasedAccess.rolesAllowedForBasic('USER'),
 		customerController.add),
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/customer/{customerId}:
 *   put:
 *     security:
@@ -90,12 +90,12 @@ module.exports = function(router){
 *           $ref: '#/definitions/Customer'
 */
 	router.put('/v1.0/customer/:customerId', 
-		auth.verifyWithJwt, 
-		roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN'),
+		//auth.verifyWithJwt, 
+		//roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN'),
 		customerController.update),
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/customer/login:
 *   post:
 *     security:
@@ -119,14 +119,14 @@ module.exports = function(router){
 *           $ref: '#/definitions/Customer'
 */
 	router.post('/v1.0/customer/login', 
-		auth.verifyWithBasicAuth, 
-		roleBasedAccess.rolesAllowedForBasic('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
+		//auth.verifyWithBasicAuth, 
+		//roleBasedAccess.rolesAllowedForBasic('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
 		customerController.login),
 
 
 /**
 *
-* @swaggers
+* @swagger
 * /v1.0/customer/forgotpassword:
 *   post:
 *     security:
@@ -150,12 +150,12 @@ module.exports = function(router){
 *           $ref: '#/definitions/BooleanResponse'
 */
 	router.post('/v1.0/customer/forgotpassword', 
-		auth.verifyWithBasicAuth, 
-		roleBasedAccess.rolesAllowedForBasic('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
+		//auth.verifyWithBasicAuth, 
+		//roleBasedAccess.rolesAllowedForBasic('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
 		customerController.forgotPassword),
 /**
 *
-* @swaggers
+* @swagger
 * /v1.0/customer/verifyOtp:
 *   get:
 *     security:
@@ -183,8 +183,8 @@ module.exports = function(router){
 *           $ref: '#/definitions/VerifyOTPResponse'
 */
 	router.get('/v1.0/customer/verifyOtp', 
-		auth.verifyWithBasicAuth, 
-		roleBasedAccess.rolesAllowedForBasic('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
+		//auth.verifyWithBasicAuth, 
+		//roleBasedAccess.rolesAllowedForBasic('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
 		customerController.verifyOtp)
 
 }

@@ -35,7 +35,7 @@ exports.get = (req, res, next) => {
 
 exports.add = (req, res, next) => {
 	logger.info("Rigistering new customers..");
-	customerRequest.ValidateCustomerRequest(req.body, next);
+	//customerRequest.ValidateCustomerRequest(req.body, next);
     customerServiceImpl.create(req.body, function (err , result){
 		if (err) {
 			next(err);

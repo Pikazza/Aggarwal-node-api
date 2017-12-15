@@ -8,7 +8,10 @@ const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER'];
 const statusType = ['SHOW','HIDE'];
 
 let productSchema = new Schema({
-      itemId:String,
+      itemId:{
+      type: String,
+      unique: true
+    },
       itemName:String,
       itemDesc:String,
       itemImage:String,

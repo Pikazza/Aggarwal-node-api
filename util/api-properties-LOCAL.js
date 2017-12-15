@@ -1,37 +1,39 @@
-//LOCAL
-
 module.exports = {
 	mail:{
 		host:'smtp.gmail.com',
-		port:'465',
-		senderName:'HaoChii',
+		port:'465',	
+		senderName:'agarwal',
 		senderMailId:'pikazzatestsp@gmail.com',
 		passWord:'Pikazza1'
 	},
 	db:{
-		url:'mongodb://haochii_admin:haochii123@52.210.196.48:27017/haochii_db_test',
-		name:'haochii_db_test',
+		url:'mongodb://35.200.176.109:21215/agarwal-db',
+		name:'agarwal-db',
 	},
 	basicAuth:{
 		userName:'Cumulonimbus',
 		passWord:'H40@C#i!CuMl0P!K4ZzA9nIWBuzH40@C#i!'
 	},
 	jwtSecret:{
-		key:'secretpasswordforhaochiinodejsproject'
+		key:'secretpasswordforstarvzinodejsproject'
 	},
 	logger:{
-		path:'/home/prabakaran/haochii-log/',
+		path:'/home/admin/haochii-log/',
 	},
 	imageRefPath:{
-		uploadPath:'/home/prabakaran/haochii-images/images/',
-		hostingPath:'/home/prabakaran/haochii-images/',
-		host:'http://192.168.0.63:8080/images/'
+		uploadPath:'/home/admin/haochii-images/images/',
+		hostingPath:'/home/admin/haochii-images/',
+		host:'http://localhost:8080/images/'
 	},
+	/*imageRefPath:{
+		uploadPath:'/opt/starvzi-images/images/',
+		hostingPath:'/opt/starvzi-images/',
+		//host:'http://192.168.0.62:8080/images/'
+		host:'http://35.198.227.184/images/'
+		//host:'http://35.187.21.181/images/'
+		//uploadPath:'/opt/starvzi-images/images/',
+	},*/
 	swagger:{
 		hostpath:'localhost:8080'
 	}
 };
-
-//54.169.42.157 //localhost //52.210.196.48 //haochii_db_test // haochii_db
-///home/ubuntu/haochii_images/images/
-///home/prabakaran/Documents/haochii_images/images/

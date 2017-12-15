@@ -71,11 +71,10 @@ module.exports = function(router){
 *     properties:
 *       authMech:
 *         type: string
-*         default: MAIL
+*         default: MOBILE
 *         enum:
-*           - MAIL
-*           - FACEBOOK
-*           - GOOGLE
+*           - MOBILE
+*           - EMAIL
 *       authId:
 *         type: string
 *       authToken:
@@ -89,12 +88,6 @@ module.exports = function(router){
 *           - HAOCHII_ADMIN
 *   Address:
 *     properties:
-*       addressType:
-*         type: string
-*         default: BILLING
-*         enum:
-*           - BILLING
-*           - DELEVERY
 *       addressLine1:
 *         type: string
 *       addressLine2:
@@ -651,6 +644,76 @@ module.exports = function(router){
 *         type: array
 *         items:
 *           $ref: '#/definitions/SubCategory1'
+*   HomeTopSlider:
+*     properties:
+*       image: 
+*         type: string
+*       status:
+*         type: string
+*         default: SHOW
+*         enum:
+*           - SHOW
+*           - HIDE
+*       tags:
+*         type: array
+*         items:
+*           type: string
+*   HomeSlider:
+*     properties:
+*       image: 
+*         type: string
+*       status:
+*         type: string
+*         default: SHOW
+*         enum:
+*           - SHOW
+*           - HIDE
+*   ReferenceData:
+*     properties:
+*       dayDeals:
+*         type: array
+*         items:
+*           type: string
+*       homeTopSlider:
+*         type: array
+*         items:
+*           $ref: '#/definitions/HomeTopSlider'
+*       homebottomSlider:
+*         type: array
+*         items:
+*           $ref: '#/definitions/HomeSlider'
+*       medicosSlider:
+*         type: array
+*         items:
+*           $ref: '#/definitions/HomeSlider'
+*       opticalsSlider:
+*         type: array
+*         items:
+*           $ref: '#/definitions/HomeSlider'
+*   ReferenceDataRequest:
+*     properties:
+*       refId: 
+*         type: string
+*       dayDeals:
+*         type: array
+*         items:
+*           type: string
+*       homeTopSlider:
+*         type: array
+*         items:
+*           $ref: '#/definitions/HomeTopSlider'
+*       homebottomSlider:
+*         type: array
+*         items:
+*           $ref: '#/definitions/HomeSlider'
+*       medicosSlider:
+*         type: array
+*         items:
+*           $ref: '#/definitions/HomeSlider'
+*       opticalsSlider:
+*         type: array
+*         items:
+*           $ref: '#/definitions/HomeSlider'
 *
 */
 

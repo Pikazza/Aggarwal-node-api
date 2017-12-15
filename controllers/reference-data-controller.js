@@ -14,3 +14,11 @@ exports.getAll = (req, res, next) => {
 			}
 		});
 };
+
+exports.update = (req, res, next) => {
+	logger.info("Updating existing reference data.."+req.params.refId);
+    referenceDataServiceImpl.update(req.params.refId, req.body, function (err , result){
+		if (err) next(err);
+		res.status(200).json(result);
+	});
+};

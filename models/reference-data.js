@@ -1,27 +1,23 @@
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
+let homeTopSliderSchema = new Schema({
+    image:String,
+    status:String,
+    tags:[String]
+})
+
+let sliderSchema = new Schema({
+    image:String,
+    status:String
+})
+
 let referenceDataSchema = new Schema({
-	userType:[String],
-    userStatus:[String],
-    roleType:[String],
-    addressType:[String],
-    shopStatus:[String],
-    menuType:[String],
-    itemStatusType:[String],
-    itemCategoryType:[String],
-    orderType:[String],
-    paymentStatusType:[String],
-    serviceTyp:[String],
-    categoryImages:
-	    {
-			BASE:String,
-			TOPPING:String,
-			SAUCE:String,
-			SIDE:String,
-			DRINK:String,
-			COMBO:String
-		}
+	dayDeals:[String],
+    homeTopSlider:[homeTopSliderSchema],
+    homebottomSlider:[sliderSchema],
+    medicosSlider:[sliderSchema],
+    opticalsSlider:[sliderSchema]
     },{ collection: 'referenceData' });
 
 

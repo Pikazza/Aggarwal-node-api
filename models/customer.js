@@ -18,6 +18,10 @@ const validateEmail = function(authId) {
     return regx.test(authId)
 };
 
+let wishItem = new Schema({
+    itemId:String,
+    count:Number
+})
 
 let customerSchema = new Schema({
     customerId:{
@@ -51,10 +55,7 @@ let customerSchema = new Schema({
     emailId: {
       type: String,
       trim: true,
-      lowercase: true,
-      unique: true,
-      required: true,
-      validate: [validateEmail, 'Please fill a valid email address']
+      lowercase: true
     },
     createdOn: {
         type: Date
@@ -86,7 +87,8 @@ let customerSchema = new Schema({
     	deviceId:String,
 		  deviceType:String,
 		  deviceToken:String
-	}
+	},
+  wishItem:[wishItem]
 }, { collection: 'customer' });
 
 

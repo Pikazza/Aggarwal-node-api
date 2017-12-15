@@ -76,7 +76,7 @@
 window.onload = function() {
     // Build a system 52.210.196.48
   const ui = SwaggerUIBundle({
-    url: "http://35.200.176.109:8080/swagger.json",
+    url: "http://"+window.location.hostname+":8080/swagger.json",
     dom_id: '#swagger-ui',
     presets: [
       SwaggerUIBundle.presets.apis,
