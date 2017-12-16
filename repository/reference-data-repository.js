@@ -9,7 +9,7 @@ module.exports.findAll = (next) => {
 	// 	if (err) next(err);
 	// 	next(null, result);
 	// }); 
-		referenceData.find({}, function(err, result) {
+		referenceData.findOne({}, function(err, result) {
 		if (err) next(err);
 		next(null, result);
 	}); 
@@ -26,13 +26,7 @@ module.exports.findRefById =  (refId, next) => {
 };
 
 module.exports.update = function (productReq, next) {
-	//var ss = new franchisee(partyReq);
-	/*partyReq.save(function(err, result) {
-			if (err)  next(err);
-			next(null, result);
-		});*/
-
-		referenceData.findOneAndUpdate({"itemId":productReq.itemId},productReq,{new: true},function(err, result) {
+		referenceData.findOneAndUpdate({"_id":productReq._id},productReq,{new: true},function(err, result) {
 			if (err) {
 				next(err);
 			}  

@@ -12,45 +12,127 @@ module.exports.getAll = (next) => {
 };
 
 module.exports.update = (refId, refReq, next) => {
-console.log("coming to impl "+refId)
-	referenceDataRepository.findRefById(refId, function(err, oneCustomer) {
+//console.log("coming to impl "+refId)
+	referenceDataRepository.findAll(function(err, oneCustomer) {
 		if (err){
 			next(err);
 		}
 		if(!oneCustomer) {
 			next(new ProductNotFoundError("No Refence items found for given id"+refId));
 		}
-		else if(refId != refReq.refId){
-			next(new ProductNotFoundError("Refence id passed in URL "+refId+
-			" is not same as Product id "+refReq.refId +" passed in body"));
-		}
 		else{
 			console.log("Pikazza ref data update "+JSON.stringify(oneCustomer));
 
 			let prod = new referenceData(oneCustomer);
-				
-			prod.dayDeals= refReq.dayDeals;
-
-			if (refReq.homeTopSlider){
-				if(slider._id){
-					_.forEach(refReq.homeTopSlider, function(slider){
-					console.log("id is there");
-					prod.homeTopSlider.push(slider);					
-				});
-
-				}
-				else{
-						console.log("id is not there");
-						if(slider.image){
-						slider.image=apiUtils.uploadImage("refData_"+(Math.random() * (1000 - 10) + 10),slider.image);
-						}
-						prod.homeTopSlider.push(slider);
-					}
+			
+			if(refReq.dayDeals)	{
+				prod.dayDeals= refReq.dayDeals;
 			}
 
-			/*if(refReq.itemImage){
-				prod.itemImage=apiUtils.uploadImage("product_"+refId,refReq.itemImage);
-			}*/
+			if (refReq.homeTopSlider){
+
+				_.forEach(refReq.homeTopSlider, function(slider){
+					if(slider._id && prod.homeTopSlider){
+						_.map(prod.homeTopSlider, function(obj){
+							  if(obj._id==slider._id) {//console.log("inside map and going to replace the calues");
+							  	if(slider.image){
+									obj.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
+								}
+							      obj.status=slider.status;
+							      obj.tags=slider.tags;
+							      obj.name=slider.name;
+							      obj.order=slider.order;
+							  }
+						});			
+					}
+					else{
+						console.log("id is not there");
+						if(slider.image){
+						slider.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
+						}
+						prod.homeTopSlider.push(slider);
+					}									
+				});
+			}
+
+			if (refReq.homebottomSlider){
+
+				_.forEach(refReq.homebottomSlider, function(slider){
+					if(slider._id && prod.homebottomSlider){
+						_.map(prod.homebottomSlider, function(obj){
+							  if(obj._id==slider._id) {//console.log("inside map and going to replace the calues");
+							  	if(slider.image){
+									obj.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
+								}
+							     obj.status=slider.status;
+							      obj.tags=slider.tags;
+							      obj.name=slider.name;
+							      obj.order=slider.order;
+							  }
+						});			
+					}
+					else{
+						console.log("id is not there");
+						if(slider.image){
+						slider.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
+						}
+						prod.homebottomSlider.push(slider);
+					}									
+				});
+			}
+
+			if (refReq.opticalsSlider){
+
+				_.forEach(refReq.opticalsSlider, function(slider){
+					if(slider._id && prod.opticalsSlider){
+						_.map(prod.opticalsSlider, function(obj){
+							  if(obj._id==slider._id) {//console.log("inside map and going to replace the calues");
+							  	if(slider.image){
+									obj.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
+								}
+							     obj.status=slider.status;
+							      obj.tags=slider.tags;
+							      obj.name=slider.name;
+							      obj.order=slider.order;
+							  }
+						});			
+					}
+					else{
+						console.log("id is not there");
+						if(slider.image){
+						slider.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
+						}
+						prod.opticalsSlider.push(slider);
+					}									
+				});
+			}
+
+			if (refReq.medicosSlider){
+
+				_.forEach(refReq.medicosSlider, function(slider){
+					if(slider._id && prod.medicosSlider){
+						_.map(prod.medicosSlider, function(obj){
+							  if(obj._id==slider._id) {//console.log("inside map and going to replace the calues");
+							  	if(slider.image){
+									obj.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
+								}
+							     obj.status=slider.status;
+							      obj.tags=slider.tags;
+							      obj.name=slider.name;
+							      obj.order=slider.order;
+							  }
+						});			
+					}
+					else{
+						console.log("id is not there");
+						if(slider.image){
+						slider.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
+						}
+						prod.medicosSlider.push(slider);
+					}									
+				});
+			}
+			
 			referenceDataRepository.update(prod, function(err, result) {
 				if(err) {
 					next(err);

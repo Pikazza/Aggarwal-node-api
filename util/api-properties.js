@@ -7,7 +7,7 @@ module.exports = {
 		passWord:'Pikazza1'
 	},
 	db:{
-		url:'mongodb://localhost:21215/agarwal-db',
+		url:'mongodb://35.200.176.109:21215/agarwal-db',
 		name:'agarwal-db',
 	},
 	basicAuth:{
@@ -18,12 +18,12 @@ module.exports = {
 		key:'secretpasswordforstarvzinodejsproject'
 	},
 	logger:{
-		path:'/app/logs/'
+		path:'/home/admin/haochii-log/',
 	},
 	imageRefPath:{
-		uploadPath:'/app/aggarwal-images/images/',
-		hostingPath:'/app/aggarwal-images/',
-		host:'http://35.200.176.109:8080/images/'
+		uploadPath:'/home/admin/haochii-images/images/',
+		hostingPath:'/home/admin/haochii-images/',
+		host:'http://localhost:8080/images/'
 	},
 	/*imageRefPath:{
 		uploadPath:'/opt/starvzi-images/images/',
@@ -34,6 +34,6 @@ module.exports = {
 		//uploadPath:'/opt/starvzi-images/images/',
 	},*/
 	swagger:{
-		hostpath:'35.200.176.109:8080'
+		hostpath:'localhost:8080'
 	}
 };

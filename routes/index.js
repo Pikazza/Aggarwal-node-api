@@ -646,6 +646,10 @@ module.exports = function(router){
 *           $ref: '#/definitions/SubCategory1'
 *   HomeTopSlider:
 *     properties:
+*       name: 
+*         type: string
+*       order: 
+*         type: number
 *       image: 
 *         type: string
 *       status:
@@ -660,6 +664,10 @@ module.exports = function(router){
 *           type: string
 *   HomeSlider:
 *     properties:
+*       name: 
+*         type: string
+*       order: 
+*         type: number
 *       image: 
 *         type: string
 *       status:
