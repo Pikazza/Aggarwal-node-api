@@ -11,7 +11,7 @@ module.exports.findProductById =  (ptyId, next) => {
 };
 
 module.exports.findAll=  ( next) => {
-	category.find({}, function(err, result) {
+	category.findOne({}, function(err, result) {
 		if (err) next(err);
 		next(null, result);
 	}); 
@@ -31,12 +31,12 @@ module.exports.update = function (productReq, next) {
 			next(null, result);
 		});*/
 
-		category.findOneAndUpdate({"categoryId":productReq.categoryId},productReq, {new: true},function(err, result) {
+		category.findOneAndUpdate({"_id":productReq._id},productReq, {new: true},function(err, result) {
 			if (err) {
 				next(err);
 			}  
 			else{
-				console.log("pikazza"+ result);
+				//console.log("pikazza         "+ result);
 				next(null, result);
 			}
 		});

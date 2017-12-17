@@ -69,7 +69,6 @@ let customerSchema = new Schema({
   		authId:{
         type: String,
         trim: true,
-        required: true,
         minlength: 10,
         maxlength: 12
         },
@@ -88,7 +87,8 @@ let customerSchema = new Schema({
 		  deviceType:String,
 		  deviceToken:String
 	},
-  wishItem:[wishItem]
+  verified:Boolean,
+  wishList:[wishItem]
 }, { collection: 'customer' });
 
 

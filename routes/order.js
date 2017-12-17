@@ -5,11 +5,9 @@ const roleBasedAccess = require('../config/permission');
 module.exports = function(router) {
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/order:
 *   get:
-*     security:
-*       - Bearer: []
 *     tags:
 *       - Order
 *     description: | 
@@ -50,16 +48,14 @@ module.exports = function(router) {
 *           $ref: '#/definitions/ErrorModel'
 */
 	router.get('/v1.0/order',
-		auth.verifyWithJwt,
-		roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
+		//auth.verifyWithJwt,
+		//roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
 		orderController.getOrder),
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/order:
 *   post:
-*     security:
-*       - Bearer: []
 *     tags:
 *       - Order
 *     description: placeing new Order
@@ -79,16 +75,14 @@ module.exports = function(router) {
 *           $ref: '#/definitions/Order'
 */
 	router.post('/v1.0/order', 
-		auth.verifyWithJwt,
-		roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
+		//auth.verifyWithJwt,
+		//roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
 		orderController.addOrder),
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/order/{orderId}:
 *   put:
-*     security:
-*       - Bearer: []
 *     tags: 
 *      - Order
 *     description: Updates existing Order
@@ -111,8 +105,8 @@ module.exports = function(router) {
 *           $ref: '#/definitions/Order'
 */
 	router.put('/v1.0/order/:orderId', 
-		auth.verifyWithJwt,
-		roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
+		//auth.verifyWithJwt,
+		//roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
 		orderController.updateOrder)
 
 

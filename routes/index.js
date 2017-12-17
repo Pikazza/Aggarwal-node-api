@@ -61,6 +61,12 @@ module.exports = function(router){
 *           - IOS
 *       deviceToken:
 *         type: string
+*   WishList:
+*     properties:
+*       itemId:
+*         type: string
+*       count:
+*         type: number
 *   Location:
 *     properties:
 *       latitude:
@@ -96,7 +102,7 @@ module.exports = function(router){
 *         type: string
 *       town:
 *         type: string
-*       county:
+*       state:
 *         type: string
 *       postCode:
 *         type: string
@@ -214,7 +220,7 @@ module.exports = function(router){
 *         type: string
 *       lastName:
 *         type: string
-*       phoneNumber:
+*       emailId:
 *         type: string
 *       device:
 *           $ref: '#/definitions/Device'
@@ -236,16 +242,20 @@ module.exports = function(router){
 *         type: string
 *       lastName:
 *         type: string
-*       phoneNumber:
+*       emailId:
 *         type: string
+*       verified:
+*         type: boolean
 *       device:
 *           $ref: '#/definitions/Device'
 *       authentication:
 *           $ref: '#/definitions/Authentication'
-*       addresses:
+*       address:
+*           $ref: '#/definitions/Address'
+*       wishList:
 *         type: array
 *         items:
-*           $ref: '#/definitions/Address'
+*           $ref: '#/definitions/WishList'
 *   OrderingCharge:
 *     properties:
 *       vatAmount:
@@ -415,63 +425,6 @@ module.exports = function(router){
 *           - IOS
 *       deviceToken:
 *         type: string
-*   MenuItemRequest:
-*     properties:
-*       itemName: 
-*         type: string
-*       offerPrice:
-*         type: number
-*       status:
-*         type: string
-*         default: SOLD_OUT
-*         enum:
-*           - SOLD_OUT
-*           - AVAILABLE
-*           - RUNNING_LOW
-*           - PRICE_SURGE
-*   MenuRequest:
-*     properties:
-*       franchiseeId:
-*         type: number
-*       menuItem:
-*         type: array
-*         items:
-*           $ref: '#/definitions/MenuItemRequest'
-*   MenuItemResponse:
-*     properties:
-*       itemName: 
-*         type: string
-*       price:
-*         type: number
-*       itemDesc: 
-*         type: string
-*       offerPrice:
-*         type: number
-*       status:
-*         type: string
-*         default: SOLD_OUT
-*         enum:
-*           - SOLD_OUT
-*           - AVAILABLE
-*           - RUNNING_LOW
-*           - PRICE_SURGE
-*       category:
-*         type: string
-*   MenuResponse:
-*     properties:
-*       franchiseeId:
-*         type: number
-*       menuType:
-*         type: string
-*         default: MENUTYPE_1
-*         enum:
-*           - MENUTYPE_1
-*           - MENUTYPE_2
-*           - MENUTYPE_3
-*       menuItem:
-*         type: array
-*         items:
-*           $ref: '#/definitions/MenuItemResponse'
 *   ErrorModel:
 *     required:
 *      - code
@@ -582,6 +535,8 @@ module.exports = function(router){
 *     properties:
 *       name: 
 *         type: string
+*       image: 
+*         type: string	
 *       status:
 *         type: string
 *         default: SHOW
@@ -591,6 +546,8 @@ module.exports = function(router){
 *   SubCategory3:
 *     properties:
 *       name: 
+*         type: string
+*       image: 
 *         type: string
 *       status:
 *         type: string
@@ -606,6 +563,8 @@ module.exports = function(router){
 *     properties:
 *       name: 
 *         type: string
+*       image: 
+*         type: string
 *       status:
 *         type: string
 *         default: SHOW
@@ -620,6 +579,8 @@ module.exports = function(router){
 *     properties:
 *       name: 
 *         type: string
+*       image: 
+*         type: string
 *       status:
 *         type: string
 *         default: SHOW
@@ -632,8 +593,6 @@ module.exports = function(router){
 *           $ref: '#/definitions/SubCategory2'
 *   Category:
 *     properties:
-*       categoryId: 
-*         type: string
 *       categories:
 *         type: array
 *         items:
@@ -700,8 +659,6 @@ module.exports = function(router){
 *           $ref: '#/definitions/HomeSlider'
 *   ReferenceDataRequest:
 *     properties:
-*       refId: 
-*         type: string
 *       dayDeals:
 *         type: array
 *         items:

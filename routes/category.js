@@ -16,12 +16,6 @@ module.exports = function(router){
 *                 Returns all generic Category or single Category based on Query parems.
 *     produces:
 *       - application/json
-*     parameters:
-*       - name: categoryId
-*         description: Category's id has to be passed to get the listings.
-*         in: query
-*         required: false
-*         type: integer
 *     responses:
 *       200:
 *         description: Menu object associated with Franchisee
@@ -32,7 +26,7 @@ module.exports = function(router){
 		categoryController.get),
 
 /**
-* @swagger
+* @swaggers
 * /v1.0/category:
 *   post:
 *     tags:
@@ -60,7 +54,7 @@ module.exports = function(router){
 
 	/**
 * @swagger
-* /v1.0/category/{categoryId}:
+* /v1.0/category:
 *   put:
 *     tags:
 *       - Category
@@ -68,11 +62,6 @@ module.exports = function(router){
 *     produces:
 *       - application/json
 *     parameters:
-*       - name: categoryId
-*         description: Category's id has to be passed to get the listings.
-*         in: path
-*         required: true
-*         type: string
 *       - name: Category
 *         description: Object which has array of menu that has to be modified.
 *         in: body
@@ -85,7 +74,7 @@ module.exports = function(router){
 *         schema:
 *           $ref: '#/definitions/Category'
 */
-	router.put('/v1.0/category/:categoryId', 
+	router.put('/v1.0/category', 
 		//auth.verifyWithJwt,
 		//roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
 		categoryController.update)

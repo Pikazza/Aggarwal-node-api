@@ -6,6 +6,7 @@ const customerRepository = require('../repository/customer-repository');
 const customer = require('../models/customer').Customer;
 const jwtAuth = require('../config/basic-jwt-auth');
 const mailer = require('../util/mail-sender');
+const twilio = require('../config/twilio');
 const PartyAlreadyExistError = require('../exceptions/party-already-exist-error');
 const PartyNotFoundError = require('../exceptions/party-not-found-error');
 const PasswordNotFound = require('../exceptions/password-not-match');
@@ -40,7 +41,7 @@ module.exports.create = (customerReq, next) => {
 		next(err);
 	}
 	if(result){
-		next(new PartyAlreadyExistError("The Email Address is Already Registered "+customerReq.authentication.authId));
+		next(new PartyAlreadyExistError("The Mobile No. is Already Registered "+customerReq.authentication.authId));
 	}
 	else{
 		SequenceImpl.getSequence("customer", function(err, sequenceId){
@@ -48,22 +49,26 @@ module.exports.create = (customerReq, next) => {
 				next(err);
 			}
 			else{
+				let temptoken =_.random(1111, 9999);
 				var cust = new customer(customerReq);
-				let emailId = customerReq.authentication.authId;
+				let mobileNo = customerReq.authentication.authId;
 				let plainPass = customerReq.authentication.authToken;
 				cust.status='ACTIVE';
 				cust.customerId=sequenceId;
 				cust.createdOn= new Date();
 				cust.updatedOn= new Date();
 				cust.authentication.authToken=apiUtils.encyptAuthToken(plainPass);
+				cust.authentication.tempToken=temptoken;
 				cust.authentication.role='USER';
+				cust.authentication.tempTokenExpiredOn=new Date().addHours(48);
+				cust.verified=false;
 				cust.addresses=[];
 				customerRepository.create(cust, function(err, result) {
 					if (err){
 						next(err);
 					} 
 					else{
-						mailer.MailSender(emailId,plainPass,"","REG_CUSTOMER");
+						twilio.SMSSender(mobileNo,"Your Aggarwal daily needs verification code is : "+temptoken);
 						next(null, result);
 					}
 					
@@ -91,43 +96,30 @@ module.exports.update = (customerId, customerReq, next) => {
 		else{
 			let cust = new customer(oneCustomer);
 			cust.status=customerReq.status;
-			cust.phoneNumber=customerReq.phoneNumber;
+			cust.emailId=customerReq.emailId;
 			cust.firstName=customerReq.firstName;
 			cust.lastName=customerReq.lastName;
 			cust.modifiedOn=new Date();
+			cust.verified=customerReq.verified;
 			if(customerReq.profileImage){
-			var path = apiUtils.uploadImage(cust.firstName+cust.customerId+"_cu_cover",customerReq.profileImage);
+			var path = apiUtils.uploadImage("customer_"+cust.customerId,customerReq.profileImage);
 			cust.profileImage=path
 			}
-			if(customerReq.authentication.authToken){
+			//console.log("true or false "+ _.isNil(customerReq.authentication));
+			if(!_.isUndefined( customerReq.authentication) && !_.isUndefined( customerReq.authentication.authToken) ){
 				let plainPass = customerReq.authentication.authToken;
 				cust.authentication.authToken = apiUtils.encyptAuthToken(plainPass);
 			}
-			if(customerReq.addresses){
-
-				let address;
-				_.each(customerReq.addresses, function(reqAddress,i){
-				if(cust.addresses.length > 0 ){ 
-				address = _.some(cust.addresses, [ 'addressType', reqAddress.addressType ]);
+			if(customerReq.address){
+							cust.address.addressLine1= customerReq.address.addressLine1;
+							cust.address.addressLine2= customerReq.address.addressLine2;
+							cust.address.addressLine3= customerReq.address.addressLine3;
+							cust.address.town= customerReq.address.town;
+							cust.address.state= customerReq.address.state;
+							cust.address.postCode= customerReq.address.postCode;
 				}
-
-				if(address){
-					_.each(cust.addresses, function(resAddress,i){
-						if(resAddress.addressType == reqAddress.addressType){
-							resAddress.addressLine1= reqAddress.addressLine1;
-							resAddress.addressLine2= reqAddress.addressLine2;
-							resAddress.addressLine3= reqAddress.addressLine3;
-							resAddress.town= reqAddress.town;
-							resAddress.county= reqAddress.county;
-							resAddress.postCode= reqAddress.postCode;
-						}
-					});
-				}
-				else{
-				cust.addresses.push(reqAddress);
-				}
-
-				});
+			if(customerReq.wishList){
+						cust.wishList = customerReq.wishList;
 			}
 			customerRepository.update(cust, function(err, result) {
 				if(err) {
@@ -148,17 +140,21 @@ module.exports.login = (loginRequest, next) => {
 	customerRepository.findByAuthId(loginRequest.authId, function(err, result) {
 		if(err) next(err, null);
 		if(!result) {
-			next(new PartyNotFoundError("There is no Records found for Franchisee id "+loginRequest.authId));
+			next(new PartyNotFoundError("There is no Records found for Customer id "+loginRequest.authId));
 		} else if(! apiUtils.compareAuthToken(loginRequest.authToken,result.authentication.authToken)) {
 			next(new PasswordNotFound("Given Password is Not Matched for "+loginRequest.authId));
-		} else {
+		}
+		else if(! result.verified) {
+			next(new PasswordNotFound(" Your Account not verified/password expired for "+loginRequest.authId));
+		}  else {
 				result.device.deviceType=loginRequest.deviceType;
 				result.device.deviceToken=loginRequest.deviceToken;
-				let token= jwtAuth.getJwt(result.customerId,result.authentication.authId,result.franchiseeName,result.firstName,
-						   result.lastName,"CUSTOMER",result.authentication.role);
+				/*let token= jwtAuth.getJwt(result.customerId,result.authentication.authId,result.franchiseeName,result.firstName,
+						   result.lastName,"CUSTOMER",result.authentication.role);*/
 				customerRepository.update(result, function(err, updateResult) {
-					next(null, {"customer":result,"jwtToken":token});
-					});	
+					//next(null, {"customer":result,"jwtToken":token});
+					next(null, result);
+				});	
 		}
 	});
 };
@@ -171,18 +167,22 @@ module.exports.forgotPassword = (authId, next) => {
 		if(!oneCustomer) {
 			next(new PartyNotFoundError("There is no Records found for Franchisee id "+authId));
 		}  else {
-			let random = (Math.random()*1e16).toString(36);
+			//let random = (Math.random()*1e16).toString(36);
+			let random =_.random(1111, 9999);
 			oneCustomer.authentication.tempToken=random;
 			oneCustomer.authentication.tempTokenExpiredOn=new Date().addHours(48);
+			oneCustomer.verified=false;
 				customerRepository.update(oneCustomer, function(err, result) {
-				mailer.MailSender(oneCustomer.authentication.authId,"",oneCustomer.authentication.tempToken,"FORGOT_PASSWORD");
+				//mailer.MailSender(oneCustomer.authentication.authId,"",oneCustomer.authentication.tempToken,"FORGOT_PASSWORD");
 				next(null, "true");
+				twilio.SMSSender(mobileNo,"Your Aggarwal daily needs verification code is : "+random);
 					});			
 		}
 	});
 };
 
 module.exports.verifyOtp = (authId, otp, next) => {
+	console.log("pikazza otp section");
 	customerRepository.findByAuthId(authId, function(err, result) {
 		if(err) {
 			next(err, null);
@@ -196,9 +196,15 @@ module.exports.verifyOtp = (authId, otp, next) => {
 			next(new OTPValidationError("given OTP is Expired on "+result.authentication.tempTokenExpiredOn));
 		}
 		else{
-			let token= jwtAuth.getJwt(result.customerId,result.authentication.authId,result.franchiseeName,result.firstName,
-						   result.lastName,"CUSTOMER",result.authentication.role);
-			next(null, {"status":"true","customerId":result.customerId,"jwtToken":token});
+			//let token= jwtAuth.getJwt(result.customerId,result.authentication.authId,result.franchiseeName,result.firstName,
+			//			   result.lastName,"CUSTOMER",result.authentication.role);
+
+				result.verified=true;
+				customerRepository.update(result, function(err, updateResult) {
+					//next(null, {"customer":result,"jwtToken":token});
+					next(null, updateResult);
+				});	
+			next(null, {"status":"true","customerId":result.customerId});
 		}
 	});
 

@@ -23,7 +23,7 @@ router.get('/v1.0/referenceData',
 
 	/**
 * @swagger
-* /v1.0/referenceData/{refId}:
+* /v1.0/referenceData:
 *   put:
 *     tags:
 *       - ReferenceData
@@ -31,11 +31,6 @@ router.get('/v1.0/referenceData',
 *     produces:
 *       - application/json
 *     parameters:
-*       - name: refId
-*         description: Reference Id that will be updated
-*         in: path
-*         required: true
-*         type: string
 *       - name: ReferenceDataRequest
 *         description: Reference Data Request for updating information
 *         in: body
@@ -48,7 +43,7 @@ router.get('/v1.0/referenceData',
 *         schema:
 *           $ref: '#/definitions/ReferenceData'
 */
-	router.put('/v1.0/referenceData/:refId', 
+	router.put('/v1.0/referenceData', 
 		//auth.verifyWithJwt,
 		//roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
 		referenceDataController.update)

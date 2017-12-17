@@ -9,27 +9,30 @@ const statusType = ['SHOW','HIDE'];
 
 let subCategoryList3 = new Schema({
       name:String,
+      image:String,
       status:{type: String, enum: statusType},
       subCategoryList3:[{
       name:String,
+      image:String,
       status:{type: String, enum: statusType}
     }]
     });
 
 let subCategoryList2 = new Schema({
       name:String,
+      image:String,
       status:{type: String, enum: statusType},
       subCategoryList2:[subCategoryList3] 
     });
 
 let categoryList = new Schema({
       name:String,
+      image:String,
       status:{type: String, enum: statusType},
       subCategoryList1:[subCategoryList2]
     });
 
 let categorySchema = new Schema({
-    categoryId:String,
     categories:[categoryList]
     },{ collection: 'category' });
 

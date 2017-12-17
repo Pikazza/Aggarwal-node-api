@@ -4,20 +4,19 @@ const ValidationError = require('../exceptions/validation-error');
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
-let validateEmail = function(authId) {
+/*let validateEmail = function(authId) {
     //let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     let regx=/^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return regx.test(authId)
-};
+};*/
 
 
 let loginRequestSchema = new Schema({
 	authId:{
         type: String,
         trim: true,
-        lowercase: true,
-        required: true,
-        validate: [validateEmail, 'Please fill a valid email address']
+        minlength: 10,
+        maxlength: 12
         },
   	authToken:{
         type: String,

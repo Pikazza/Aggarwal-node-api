@@ -10,7 +10,7 @@ const validateLoginRequest = require('../models/login-request');
 
 exports.get = (req, res, next) => {
 	if(req.query.customerId){
-		logger.info("Getting franchisee by id "+req.query.customerId);
+		logger.info("Getting Customer by id "+req.query.customerId);
 		customerServiceImpl.getById(req.query.customerId, function (err , result){
 			if (err) {
 				next(err);
@@ -21,7 +21,7 @@ exports.get = (req, res, next) => {
 		});
 	}
 	else{
-		logger.info("Getting All franchisee....");
+		logger.info("Getting All Customer....");
 		customerServiceImpl.getAll(req,res, function (err , result){
 			if (err) {
 				next(err);
@@ -56,7 +56,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-logger.info(" Franchisee Logging in V20" );
+logger.info(" Customer Logging in V20" );
 let verified =validateLoginRequest.ValidateLoginRequest(req.body, next);
 	if(verified && req.body){
 	        customerServiceImpl.login(req.body, function (err , result){
@@ -70,7 +70,7 @@ let verified =validateLoginRequest.ValidateLoginRequest(req.body, next);
 }; 
 
 exports.forgotPassword = (req, res, next) => {
-	logger.info(req.body.authId +" Franchisee Forgotten his Password  ");
+	logger.info(req.body.authId +" Customer Forgotten his Password  ");
     customerServiceImpl.forgotPassword(req.body.authId, function (err , result){
 		if (err){
 			next(err) ;
@@ -81,7 +81,7 @@ exports.forgotPassword = (req, res, next) => {
 }; 
 
 exports.verifyOtp = (req, res, next) => {
-	logger.info(req.query.authId +" Franchisee verifing his OTP with "+req.query.otpNo);
+	logger.info(req.query.authId +" Customer verifing his OTP with "+req.query.otpNo);
     customerServiceImpl.verifyOtp(req.query.authId, req.query.otpNo, function (err , result){
 		if (err){
 			next(err) ;

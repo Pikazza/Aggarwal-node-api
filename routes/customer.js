@@ -37,8 +37,6 @@ module.exports = function(router){
 * @swagger
 * /v1.0/customer:
 *   post:
-*     security:
-*       - basicAuth: []
 *     tags:
 *       - Customer
 *     description: Creates new Customer
@@ -66,8 +64,6 @@ module.exports = function(router){
 * @swagger
 * /v1.0/customer/{customerId}:
 *   put:
-*     security:
-*       - Bearer: []
 *     tags: 
 *      - Customer
 *     description: Updates existing Customer
@@ -98,8 +94,6 @@ module.exports = function(router){
 * @swagger
 * /v1.0/customer/login:
 *   post:
-*     security:
-*       - basicAuth: []
 *     tags:
 *       - Customer
 *     description: Returns Token For Bearer Authentication
@@ -129,8 +123,6 @@ module.exports = function(router){
 * @swagger
 * /v1.0/customer/forgotpassword:
 *   post:
-*     security:
-*       - basicAuth: []
 *     tags:
 *       - Customer
 *     description: Sends email with temporary password and return status true else returns false.
@@ -158,8 +150,6 @@ module.exports = function(router){
 * @swagger
 * /v1.0/customer/verifyOtp:
 *   get:
-*     security:
-*       - basicAuth: []
 *     tags:
 *       - Customer
 *     description: Returns true or false based on the otp verification.

@@ -11,7 +11,7 @@ module.exports.getAll = (next) => {
 	}); 
 };
 
-module.exports.update = (refId, refReq, next) => {
+module.exports.update = (refReq, next) => {
 //console.log("coming to impl "+refId)
 	referenceDataRepository.findAll(function(err, oneCustomer) {
 		if (err){
