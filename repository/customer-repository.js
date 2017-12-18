@@ -27,8 +27,8 @@ module.exports.findByCustomerId = (customerId, next) => {
             "localField": "wishList.itemId",
             "foreignField": "itemId",
             "as": "productDetails"
-        }
-    }*/
+        } */
+    }
 
 module.exports.findByAuthId = (authId, next) => {
 	customer.findOne({"authentication.authId":authId }, function(err, result) {
