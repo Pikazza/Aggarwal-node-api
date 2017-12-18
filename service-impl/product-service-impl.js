@@ -24,6 +24,18 @@ module.exports.findProductById = (productId, next) => {
 	});		
 };
 
+module.exports.findProductByCategory = (catOne,catTwo, next) => {
+		console.log("From impl class "+catOne + catTwo);
+	productRepository.findProductByCategory( catOne,catTwo ,function(err, result) {
+		if (err){
+			next(err);			
+		}
+		else{
+  			next(null, result);
+		}	
+	});		
+};
+
 module.exports.findAllProduct = ( next) => {
 	productRepository.findAll( function(err, result) {
 		if (err){

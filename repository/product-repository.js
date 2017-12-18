@@ -10,6 +10,25 @@ module.exports.findProductById =  (ptyId, next) => {
 	}); 
 };
 
+module.exports.findProductByCategory=  (catOne,catTwo, next) => {
+	console.log(catOne + catTwo);
+	let query={ };
+	if (catOne && catTwo){
+		query={"category1":catOne,"category2":catTwo};
+	}
+	else if(catOne){
+		query={"category1":catOne};
+	}
+	else if(catTwo){
+		query={"category2":catTwo};
+	}
+console.log("the  cat based query"+ JSON.stringify(query));
+	product.find(query , function(err, result) {
+		if (err) next(err);
+		next(null, result);
+	}); 
+};
+
 module.exports.findAll=  ( next) => {
 	product.find({}, function(err, result) {
 		if (err) next(err);

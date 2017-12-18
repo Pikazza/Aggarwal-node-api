@@ -6,13 +6,51 @@ module.exports.findByCustomerId = (customerId, next) => {
 		if (err) next(err);
 		next(null, result);
 	}); 
-};
+/*		customer.aggregate([
+		{ "$match" : {
+			"customerId":customerId
+			 }
+		 }
+ 	]).exec(function(err, result) {
+		if (err) next(err);
+		next(null, result);
+	});
+};*/
+/*,
+
+		{
+      "$unwind": "$wishList"
+        },
+    {
+        "$lookup": {
+            "from": "product",
+            "localField": "wishList.itemId",
+            "foreignField": "itemId",
+            "as": "productDetails"
+        }
+    }*/
 
 module.exports.findByAuthId = (authId, next) => {
 	customer.findOne({"authentication.authId":authId }, function(err, result) {
 		if (err) next(err);
 		next(null, result);
 	}); 
+};
+
+module.exports.findByCustomerIdAndWishList =  (ptyId, next) => {
+
+/*	product.aggregate([
+   {
+     "$lookup":
+       {
+         "from": "inventory",
+         "localField": "item",
+         "foreignField": "sku",
+         "as": "inventory_docs"
+       }
+  }
+])*/
+
 };
 
 module.exports.findAll = (next) => {

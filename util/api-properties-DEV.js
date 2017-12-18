@@ -13,7 +13,7 @@ module.exports = {
 	twilio:{
 		accountSid:"AC08917a0306887de223b707ba862c0242",
 		authToken:"3d3a1f916a39577a90b150ca1c7556be",
-		sender:"+15558675309",
+		sender:"+14438430521",
 		body: "The verification code of Aggarwal Daily needs is "
 
 	},

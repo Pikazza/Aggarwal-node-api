@@ -22,6 +22,16 @@ module.exports = function(router){
 *         in: query
 *         required: false
 *         type: integer
+*       - name: categoryOne
+*         description: first category name to filter the products
+*         in: query
+*         required: false
+*         type: string
+*       - name: categoryTwo
+*         description: second category name to filter the products
+*         in: query
+*         required: false
+*         type: string
 *     responses:
 *       200:
 *         description: It will return Product Details

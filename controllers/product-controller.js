@@ -15,6 +15,17 @@ exports.get = (req, res, next) => {
 			res.status(200).json(result);
 			}
 		});
+	}
+	if(req.query.categoryOne || req.query.categoryTwo){
+		console.log(req.query.categoryOne + req.query.categoryTwo);
+		productServiceImpl.findProductByCategory(req.query.categoryOne, req.query.categoryTwo, function (err , result){
+			if (err) {
+				next(err);
+			} 
+			else{
+			res.status(200).json(result);
+			}
+		});
 	}else{
 		productServiceImpl.findAllProduct(function (err , result){
 			if (err) {
