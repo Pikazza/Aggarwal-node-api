@@ -18,10 +18,10 @@ module.exports = function(router){
 *       - application/json
 *     parameters:
 *       - name: productId
-*         description: Product's id has to be passed to get a product sprcfic details.
+*         description: Single Product or multiple comma seperated product's id has to be passed to get a product sprcfic details.
 *         in: query
 *         required: false
-*         type: integer
+*         type: string
 *       - name: categoryOne
 *         description: first category name to filter the products
 *         in: query

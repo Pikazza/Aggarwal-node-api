@@ -5,8 +5,10 @@ const logger = require('../config/logger');
 const apiUtils = require('../util/api-utils');
 
 exports.get = (req, res, next) => {
-	logger.info("Getting franchisees. menu...");	
+	//logger.info("Getting store products...");
+		
 	if(req.query.productId){
+		logger.info("Getting store products... base on ids");
 		productServiceImpl.findProductById(req.query.productId, function (err , result){
 			if (err) {
 				next(err);
@@ -16,7 +18,8 @@ exports.get = (req, res, next) => {
 			}
 		});
 	}
-	if(req.query.categoryOne || req.query.categoryTwo){
+	else if(req.query.categoryOne || req.query.categoryTwo){
+		logger.info("Getting store products...based on categories");
 		console.log(req.query.categoryOne + req.query.categoryTwo);
 		productServiceImpl.findProductByCategory(req.query.categoryOne, req.query.categoryTwo, function (err , result){
 			if (err) {
@@ -27,6 +30,7 @@ exports.get = (req, res, next) => {
 			}
 		});
 	}else{
+		logger.info("Getting store products...");
 		productServiceImpl.findAllProduct(function (err , result){
 			if (err) {
 				next(err);

@@ -1,34 +1,33 @@
 const customer = require('../models/customer').Customer;
-
+const _ = require('lodash');
+const productRepository = require('../repository/product-repository'); 
 
 module.exports.findByCustomerId = (customerId, next) => {
+	console.log("id trying to see is "+customerId)
+	let ss = [];
 	customer.findOne({"customerId":customerId}, function(err, result) {
-		if (err) next(err);
-		next(null, result);
-	}); 
-/*		customer.aggregate([
-		{ "$match" : {
-			"customerId":customerId
-			 }
-		 }
- 	]).exec(function(err, result) {
-		if (err) next(err);
+		if (err) {
+			next(err);
+		}
+		else{
+			/*if(result.wishList){
+				console.log("wishlisdt item id"+JSON.stringify(result.wishList));
+					_.each(result.wishList, function(wishOne){
+						productRepository.findProductById(wishOne.itemId, function(err, productOne) {
+							if (err){
+								}
+							else{
+					  			wishOne.itemDetails=productOne;
+					  			ss[0]=productOne;
+							}
+						});	
+					});
+			}*/
+		}
+		//result.wishList=ss;
 		next(null, result);
 	});
-};*/
-/*,
-
-		{
-      "$unwind": "$wishList"
-        },
-    {
-        "$lookup": {
-            "from": "product",
-            "localField": "wishList.itemId",
-            "foreignField": "itemId",
-            "as": "productDetails"
-        } */
-    }
+};
 
 module.exports.findByAuthId = (authId, next) => {
 	customer.findOne({"authentication.authId":authId }, function(err, result) {

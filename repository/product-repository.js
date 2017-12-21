@@ -4,10 +4,24 @@ const product = require('../models/product').Product;
 const franchiseeRepository = require('../repository/franchisee-repository'); 
 
 module.exports.findProductById =  (ptyId, next) => {
-	product.findOne({"itemId":ptyId}, function(err, result) {
-		if (err) next(err);
-		next(null, result);
-	}); 
+
+	let array=[];
+	if (ptyId.indexOf(',') > -1) {
+		array = ptyId.split(',');
+		console.log("list of ids "+ptyId );
+		console.log("list of ids "+array );
+			product.find( { "itemId": {"$in":array } } , function(err, result) {
+			if (err) next(err);
+			next(null, result);
+		});
+	}else{
+		product.findOne({"itemId":ptyId}, function(err, result) {
+			if (err) next(err);
+			next(null, result);
+		}); 
+
+	}
+
 };
 
 module.exports.findProductByCategory=  (catOne,catTwo, next) => {

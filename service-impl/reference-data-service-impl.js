@@ -25,8 +25,11 @@ module.exports.update = (refReq, next) => {
 
 			let prod = new referenceData(oneCustomer);
 			
-			if(refReq.dayDeals)	{
-				prod.dayDeals= refReq.dayDeals;
+			if(refReq.dailyNeeds)	{
+				prod.dailyNeeds= refReq.dailyNeeds;
+			}
+			if(refReq.dealOfTheDay)	{
+				prod.dealOfTheDay= refReq.dealOfTheDay;
 			}
 
 			if (refReq.homeTopSlider){

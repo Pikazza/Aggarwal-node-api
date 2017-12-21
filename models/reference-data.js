@@ -17,7 +17,8 @@ let sliderSchema = new Schema({
 })
 
 let referenceDataSchema = new Schema({
-	dayDeals:[String],
+	dailyNeeds:[String],
+    dealOfTheDay:[String],
     homeTopSlider:[homeTopSliderSchema],
     homebottomSlider:[sliderSchema],
     medicosSlider:[sliderSchema],

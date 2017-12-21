@@ -1,6 +1,7 @@
 'use strict';
 const crypto = require('crypto');
 const ValidationError = require('../exceptions/validation-error');
+const productSchema = require('./product').ProductSchema;
 
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
