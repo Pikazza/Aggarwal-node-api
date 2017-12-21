@@ -6,10 +6,10 @@ const apiUtils = require('../util/api-utils');
 
 exports.getOrder = (req, res, next) => {
 
-	logger.info("the decoded Jwt values is "+ req.user.userType);
+	logger.info("the decoded Jwt values is ");
 		if(req.query.orderId){
 			logger.info("Getting order by id "+req.query.orderId);
-			orderServiceImpl.getByOrderId( req.user.userType, req.user.userId, req.query.orderId, function (err , result){
+			orderServiceImpl.getByOrderId( 'ADMIN', 0, req.query.orderId, function (err , result){
 				if (err) {
 					next(err);
 				} 
@@ -22,7 +22,7 @@ exports.getOrder = (req, res, next) => {
 			var startDate = apiUtils.getValidStartDate(req.query.startDate);
 			var endDate = apiUtils.getValidEndDate(req.query.endDate);
 			logger.info("Getting orders list by Date from "+startDate +" to "+endDate);
-			orderServiceImpl.getByDate(req.user.userType, req.user.userId, startDate, endDate, function (err , result){
+			orderServiceImpl.getByDate('ADMIN', 0, startDate, endDate, function (err , result){
 				if (err) {
 					next(err);
 				} 
@@ -33,7 +33,7 @@ exports.getOrder = (req, res, next) => {
 		}
 		else{
 			logger.info("Getting All Orders....");
-			orderServiceImpl.getAll(req.user.userType, req.user.userId, function (err , result){
+			orderServiceImpl.getAll('ADMIN', 0, function (err , result){
 				if (err) {
 					next(err);
 				}

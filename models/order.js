@@ -6,10 +6,10 @@ const customer = require('./customer').Customer;
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
-const orderType = ['INITIALIZED','ACCEPTED', 'READY', 'READY_TO_COLLECT','COMPLETED','CANCELED'];
-const categoryType = ['BASE','TOPPING','SAUCE','SIDE','DRINK','COMBO'];
-const paymentType= ['INITIALIZED','SUCCESSFUL','PENDING'];
-const serviceTypeEnum= ['TAKE_AWAY','DELIVERY'];
+const orderType = ['INITIALIZED','ACCEPTED', 'READY_TO_COLLECT','COMPLETED','CANCELED'];
+const paymentType= ['INITIALIZED','SUCCESSFUL','PENDING','CANCELED'];
+const serviceTypeEnum= ['TAKE_AWAY','PAYTM','CASH_ON_DELIVERY'];
+const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER'];
 
 let orderSchema = new Schema({
 	orderId:{
@@ -17,9 +17,9 @@ let orderSchema = new Schema({
 	      unique: true
 	    },
 	    customerId:{ type: Number },
-	    franchiseeId:{ type: Number },
-	    stripeToken:String,
-	    stripeFranchiseeId:String,
+	    //franchiseeId:{ type: Number },
+	    //stripeToken:String,
+	    //stripeFranchiseeId:String,
 	    orderStatus:{type: String, enum: orderType},
 	    paymentStatus: {type: String, enum: paymentType},
 	    extraPreference:String,
@@ -27,17 +27,26 @@ let orderSchema = new Schema({
 	    totalAmountToBePaid:Number,
 	    serviceType:{type: String, enum: serviceTypeEnum},
 	    orderingCharge:{
-	    	vatAmount:Number,
-	    	totalBookingAmount:Number,
-	    	discountPercent:Number,
+	    	totalProductAmount:Number,
+	    	deleveryCharge:Number,
+	    	dixcountPercent:Number,
 	    	discountedtotalAmount:Number
 	    },
 	    listOfItems:[{
-	    	itemName:String,
-	    	placeCount:Number,
-	    	price:Number,
-	    	offerPrice:Number,
-	    	catogory:{type: String, enum: categoryType}
+	    	itemId:String,
+		      itemName:String,
+		      itemImage:String,
+		      price:Number,
+		      offerPrice:Number,
+		      gst:Number,
+		      priceWithGST:Number,
+		      category1:String,
+		      category2:String,
+		      category3:String,
+		      category4:String,
+		      count:Number,
+		      unit:Number,
+		      unitType:{type: String, enum: unitType}
 	    }]
 		},{ collection: 'order' , toJSON: { virtuals: true } });
 

@@ -258,34 +258,48 @@ module.exports = function(router){
 *           $ref: '#/definitions/WishList'
 *   OrderingCharge:
 *     properties:
-*       vatAmount:
+*       totalProductAmount:
 *         type: number
-*       totalBookingAmount:
+*       deleveryCharge:
 *         type: number
-*       discountPercent:
+*       dixcountPercent:
 *         type: number
 *       discountedtotalAmount:
 *         type: number
 *   OrderItemResponse:
 *     properties:
+*       itemId: 
+*         type: string
 *       itemName: 
 *         type: string
 *       price:
 *         type: number
-*       placeCount: 
-*         type: number
 *       offerPrice:
 *         type: number
-*       catogory:
+*       gst:
+*         type: number
+*       priceWithGST:
+*         type: number
+*       count: 
+*         type: number
+*       catogory1:
 *         type: string
-*         default: BASE
+*       catogory2:
+*         type: string
+*       catogory3:
+*         type: string
+*       catogory4:
+*         type: string
+*       unit:
+*         type: number
+*       unitType:
+*         type: string
+*         default: KILOGRAM
 *         enum:
-*           - BASE
-*           - TOPPING
-*           - SAUCE
-*           - SIDE
-*           - DRINK
-*           - COMBO
+*           - KILOGRAM
+*           - GRAM
+*           - LITTER
+*           - MILLILITTER
 *   OrderUpdateRequest:
 *     properties:
 *       orderId:
@@ -308,32 +322,16 @@ module.exports = function(router){
 *           - SUCCESSFUL
 *           - CANCELED
 *   OrderRequest:
-*     required:
-*      - customerId
-*      - franchiseeId
-*      - stripeToken
-*      - stripeFranchiseeId
-*      - orderStatus
-*      - paymentStatus
-*      - totalAmountToBePaid
-*      - serviceType
-*      - listOfItems
 *     properties:
 *       customerId:
 *         type: number
-*       franchiseeId:
-*         type: number
-*       stripeToken:
-*         type: string
-*       stripeFranchiseeId:
-*         type: string
 *       orderStatus:
 *         type: string
 *         default: INITIALIZED
 *         enum:
 *           - INITIALIZED
 *           - ACCEPTED
-*           - READY
+*           - READY_TO_COLLECT
 *           - COMPLETED
 *           - CANCELED
 *       paymentStatus:
@@ -353,7 +351,8 @@ module.exports = function(router){
 *         default: TAKE_AWAY
 *         enum:
 *           - TAKE_AWAY
-*           - DELIVERY
+*           - CASH_ON_DELIVERY
+*           - PAYTM
 *       orderedOn:
 *         type: string
 *         format: date-time
