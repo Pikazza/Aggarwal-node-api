@@ -68,7 +68,6 @@ module.exports.update = (refReq, next) => {
 									obj.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
 								}
 							     obj.status=slider.status;
-							      obj.tags=slider.tags;
 							      obj.name=slider.name;
 							      obj.order=slider.order;
 							  }
@@ -94,7 +93,6 @@ module.exports.update = (refReq, next) => {
 									obj.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
 								}
 							     obj.status=slider.status;
-							      obj.tags=slider.tags;
 							      obj.name=slider.name;
 							      obj.order=slider.order;
 							  }
@@ -120,7 +118,6 @@ module.exports.update = (refReq, next) => {
 									obj.image=apiUtils.uploadImage("refData_"+(_.random(10000, 99)),slider.image);
 								}
 							     obj.status=slider.status;
-							      obj.tags=slider.tags;
 							      obj.name=slider.name;
 							      obj.order=slider.order;
 							  }

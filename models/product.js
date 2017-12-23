@@ -25,6 +25,7 @@ let productSchema = new Schema({
       category3:String,
       category4:String,
       quantityInStock:Number,
+      validTill:Date,
       unit:Number,
       createdOn: {
           type: Date

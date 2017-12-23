@@ -67,6 +67,12 @@ module.exports = function(router){
 *         type: string
 *       count:
 *         type: number
+*   ImagesList:
+*     properties:
+*       image:
+*         type: string
+*       description:
+*         type: string
 *   Location:
 *     properties:
 *       latitude:
@@ -298,6 +304,10 @@ module.exports = function(router){
 *         type: string
 *       catogory4:
 *         type: string
+*       images:
+*         type: array
+*         items:
+*           $ref: '#/definitions/ImagesList'
 *       unit:
 *         type: number
 *       unitType:
@@ -311,6 +321,8 @@ module.exports = function(router){
 *   OrderUpdateRequest:
 *     properties:
 *       orderId:
+*         type: number
+*       totalAmountToBePaid:
 *         type: number
 *       orderStatus:
 *         type: string
@@ -474,6 +486,9 @@ module.exports = function(router){
 *         type: string
 *       quantityInStock: 
 *         type: number
+*       validTill: 
+*         type: string
+*         format: date-time
 *       unit:
 *         type: number
 *       unitType:
@@ -522,6 +537,9 @@ module.exports = function(router){
 *         type: string
 *       quantityInStock: 
 *         type: number
+*       validTill: 
+*         type: string
+*         format: date-time
 *       unit:
 *         type: number
 *       unitType:

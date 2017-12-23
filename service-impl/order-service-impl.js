@@ -4,6 +4,8 @@ const SequenceImpl = require('../service-impl/sequence');
 const logger = require('../config/logger');
 const order = require('../models/order').Order;
 const OrderNotFoundError= require('../exceptions/order-not-found-error');
+const apiUtils = require('../util/api-utils');
+const _ = require('lodash');
 
 module.exports.getAll = (userType, userId, next) => {
 		  orderRepository.findAll(userType, userId, function(err, result) {
@@ -46,6 +48,18 @@ module.exports.create = (orderReq ,next) => {
 	  	}
 	  	else{
 	  		orderReq.orderId=sequenceId;
+	  		if(orderReq.listOfItems){
+	  			_.forEach(orderReq.listOfItems, function(item){
+			  		if(item.images){
+						_.forEach(item.images, function(image){
+							if(image.image){
+									image.image=apiUtils.uploadImage("order_"+(_.random(10000, 99)),image.image);
+								}
+								console.log("pikazza image.image"+ image.image)
+						});
+			  		}
+			  	});
+	  		}
 			orderRepository.create(orderReq ,function(err, result){
 				if(err){
 					next(err);
@@ -73,6 +87,7 @@ module.exports.update = (orderId, orderReq ,next) => {
 		}
 		else{
 			result.orderStatus=orderReq.orderStatus;
+			result.totalAmountToBePaid=orderReq.totalAmountToBePaid;
 			result.paymentStatus=orderReq.paymentStatus;
 			orderRepository.update(result, function(err, updatedOrder){
 				next(null, updatedOrder);

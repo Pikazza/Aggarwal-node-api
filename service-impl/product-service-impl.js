@@ -104,6 +104,7 @@ console.log("coming to impl "+productId)
 			prod.unit=productReq.unit;
 			prod.unitType=productReq.unitType;
 			prod.status=productReq.status;
+			prod.validTill=productReq.validTill;
 
 			if(productReq.itemImage){
 				prod.itemImage=apiUtils.uploadImage("product_"+productId,productReq.itemImage);

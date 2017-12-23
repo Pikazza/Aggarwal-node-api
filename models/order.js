@@ -11,6 +11,11 @@ const paymentType= ['INITIALIZED','SUCCESSFUL','PENDING','CANCELED'];
 const serviceTypeEnum= ['TAKE_AWAY','PAYTM','CASH_ON_DELIVERY'];
 const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER'];
 
+let imagesScheme = new Schema({
+  image:String,
+  description:String,
+});
+
 let orderSchema = new Schema({
 	orderId:{
 	      type: Number,
@@ -44,6 +49,7 @@ let orderSchema = new Schema({
 		      category2:String,
 		      category3:String,
 		      category4:String,
+		      images:[imagesScheme],
 		      count:Number,
 		      unit:Number,
 		      unitType:{type: String, enum: unitType}
