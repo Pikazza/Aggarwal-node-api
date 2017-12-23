@@ -94,6 +94,12 @@ module.exports = function(router){
 *           - HAOCHII_ADMIN
 *   Address:
 *     properties:
+*       addressType:
+*         type: string
+*         default: BILLING
+*         enum:
+*           - BILLING
+*           - DELEVERY
 *       addressLine1:
 *         type: string
 *       addressLine2:
@@ -250,7 +256,9 @@ module.exports = function(router){
 *           $ref: '#/definitions/Device'
 *       authentication:
 *           $ref: '#/definitions/Authentication'
-*       address:
+*       addresses:
+*         type: array
+*         items:
 *           $ref: '#/definitions/Address'
 *       wishList:
 *         type: array

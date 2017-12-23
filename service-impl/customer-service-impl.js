@@ -110,14 +110,32 @@ module.exports.update = (customerId, customerReq, next) => {
 				let plainPass = customerReq.authentication.authToken;
 				cust.authentication.authToken = apiUtils.encyptAuthToken(plainPass);
 			}
-			if(customerReq.address){
-							cust.address.addressLine1= customerReq.address.addressLine1;
-							cust.address.addressLine2= customerReq.address.addressLine2;
-							cust.address.addressLine3= customerReq.address.addressLine3;
-							cust.address.town= customerReq.address.town;
-							cust.address.state= customerReq.address.state;
-							cust.address.postCode= customerReq.address.postCode;
+			if(customerReq.addresses){
+
+				let address;
+				_.each(customerReq.addresses, function(reqAddress,i){
+				if(cust.addresses.length > 0 ){ 
+				address = _.some(cust.addresses, [ 'addressType', reqAddress.addressType ]);
 				}
+
+				if(address){
+					_.each(cust.addresses, function(resAddress,i){
+						if(resAddress.addressType == reqAddress.addressType){
+							resAddress.addressLine1= reqAddress.addressLine1;
+							resAddress.addressLine2= reqAddress.addressLine2;
+							resAddress.addressLine3= reqAddress.addressLine3;
+							resAddress.town= reqAddress.town;
+							resAddress.county= reqAddress.county;
+							resAddress.postCode= reqAddress.postCode;
+						}
+					});
+				}
+				else{
+				cust.addresses.push(reqAddress);
+				}
+
+				});
+			}
 			if(customerReq.wishList){
 						cust.wishList = customerReq.wishList;
 			}

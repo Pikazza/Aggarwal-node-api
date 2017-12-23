@@ -23,6 +23,11 @@ module.exports = function(router) {
 *         in: query
 *         required: false
 *         type: integer
+*       - name: customerId
+*         description: Customer's Id to get a order details.
+*         in: query
+*         required: false
+*         type: integer
 *       - name: startDate
 *         description: start date for listing the orders between date range.
 *         in: query

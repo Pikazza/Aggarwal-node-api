@@ -13,6 +13,18 @@ Schema = mongoose.Schema;
 const partyStatus= ['ACTIVE','INACTIVE'];
 const partyType= ['CUSTOMER','SUPPLIER','ADMIN'];
 const roleType= ['USER','AGARWAL_ADMIN','SUPER_ADMIN'];
+const addressType= ['DELEVERY','BILLING']; 
+
+let addressSchema = new Schema({
+  addressType:{type: String, enum: addressType},
+  addressLine1:String,
+  addressLine2:String,
+  addressLine3:String,
+  town:String,
+  state:String,
+  postCode:String
+});
+
 
 const validateEmail = function(authId) {
     let regx=/^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -45,14 +57,7 @@ let customerSchema = new Schema({
       minlength: 1,
       maxlength: 30
     },
-    address: {
-      addressLine1:String,
-      addressLine2:String,
-      addressLine3:String,
-      town:String,
-      state:String,
-      postCode:String
-    },
+    addresses: [addressSchema],
     emailId: {
       type: String,
       trim: true,

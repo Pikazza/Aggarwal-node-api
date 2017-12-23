@@ -54,13 +54,13 @@ orderSchema.virtual('customerDetails', {
   ref: 'customer',
   localField: 'customerId',
   foreignField: 'customerId',
-  justOne: false
+  justOne: true
 });
 orderSchema.virtual('franchiseeDetails', {
   ref: 'franchisee',
   localField: 'franchiseeId',
   foreignField: 'franchiseeId',
-  justOne: false
+  justOne: true
 });
 
 
