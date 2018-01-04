@@ -1,133 +1,133 @@
 'use strict';
 
-const franchiseeController = require('../controllers/franchisee-controller');
+const sellerController = require('../controllers/seller-controller');
 const auth = require('../config/basic-jwt-auth');
 const roleBasedAccess = require('../config/permission');
 
 module.exports = function(router){
 
 /**
-* @swaggers
-* /v1.0/franchisee:
+* @swagger
+* /v1.0/seller:
 *   get:
 *     tags:
-*       - Franchisee
+*       - Seller
 *     description: |
-*                   Returns Franchisees based on the given criteria.
-*                   In default mode, it returns all the franchisee records.
-*                   By passing Franchisee id, return single object.
+*                   Returns Sellers based on the given criteria.
+*                   In default mode, it returns all the seller records.
+*                   By passing seller id, return single object.
 *     produces:
 *       - application/json
 *     parameters:
-*       - name: franchiseeId
-*         description: Franchisee id
+*       - name: sellerId
+*         description: Seller id
 *         in: query
 *         required: false
 *         type: integer
 *     responses:
 *       200:
-*         description: An array of Franchisees
+*         description: An array of Seller
 *         schema:
-*           $ref: '#/definitions/FranchiseeRequest'
+*           $ref: '#/definitions/SellerRequest'
 */
-	router.get('/v1.0/franchisee',
-		franchiseeController.get),
+	router.get('/v1.0/seller',
+		sellerController.get),
 
 /**
-* @swaggers
-* /v1.0/franchisee:
+* @swagger
+* /v1.0/seller:
 *   post:
 *     security:
-*       - Bearer: []
+*       - basicAuth: []
 *     tags:
-*       - Franchisee
-*     description: This API creates new Franchisee and this can be only done by admin who has a role HAOCHII_ADMIN
+*       - Seller
+*     description: This API creates new Seller and this can be only done by admin who has a role HAOCHII_ADMIN
 *     produces:
 *       - application/json
 *     parameters:
-*       - name: Franchisee
-*         description: Franchisee object
+*       - name: Seller
+*         description: Seller object
 *         in: body
 *         required: true
 *         schema:
-*           $ref: '#/definitions/FranchiseeRequest'
+*           $ref: '#/definitions/SellerRequest'
 *     responses:
 *       200:
 *         description: Successfully created
 *         schema:
-*           $ref: '#/definitions/Franchisee'
+*           $ref: '#/definitions/Seller'
 *       default:
 *         description: Successfully created
 *         schema:
 *           $ref: '#/definitions/ErrorModel'
 */
-	router.post('/v1.0/franchisee', 
-		auth.verifyWithJwt,
-		roleBasedAccess.rolesAllowedForJWT('HAOCHII_ADMIN'),
-		franchiseeController.add),
+	router.post('/v1.0/seller', 
+		auth.verifyWithAccAuth, 
+		roleBasedAccess.rolesAllowedForAccAuth('SUPER_ADMIN'),
+		sellerController.add),
 
 /**
-* @swaggers
-* /v1.0/franchisee/{franchiseeId}:
+* @swagger
+* /v1.0/seller/{sellerId}:
 *   put:
 *     security:
 *       - Bearer: []
 *     tags: 
-*      - Franchisee
-*     description: Updates existing Franchisee
+*      - Seller
+*     description: Updates existing Seller
 *     produces: application/json
 *     parameters:
-*       - name: franchiseeId
-*         description: Franchisee id
+*       - name: sellerId
+*         description: Seller id
 *         in: path
 *         required: true
 *         type: integer
-*       - name: Franchisee
+*       - name: Seller
 *         in: body
-*         description: Fields for the Franchisee resource
+*         description: Fields for the Seller resource
 *         schema:
-*          $ref: '#/definitions/Franchisee'
+*          $ref: '#/definitions/Seller'
 *     responses:
 *       200:
 *         description: Successfully updated
 *         schema:
-*           $ref: '#/definitions/Franchisee'
+*           $ref: '#/definitions/Seller'
 */
-	router.put('/v1.0/franchisee/:franchiseeId', 
-		auth.verifyWithJwt, 
-		roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
-		franchiseeController.update),
+	router.put('/v1.0/seller/:sellerId', 
+		auth.verifyWithAccAuth, 
+		roleBasedAccess.rolesAllowedForAccAuth('USER','ADMIN','SUPER_ADMIN'),
+		sellerController.update),
 
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/party/user/login:
 *   post:
 *     security:
 *       - basicAuth: []
 *     deprecated: true
 *     tags:
-*       - Franchisee
+*       - Seller
 *     description: Returns Token For Bearer Authentication
 *     produces:
 *       - application/json
 *     responses:
 *       200:
-*         description: An array of Franchisees
+*         description: An array of Sellers
 *         schema:
-*           $ref: '#/definitions/Franchisee'
+*           $ref: '#/definitions/Seller'
 */
 	router.post('/v1.0/party/user/login', 
-		franchiseeController.login),
+		sellerController.login),
 
 /**
-* @swaggers
+* @swagger
 * /v2.0/party/user/login:
 *   post:
 *     security:
 *       - basicAuth: []
 *     tags:
-*       - Franchisee
+*       - Seller
 *     description: Returns Token For Bearer Authentication
 *     produces:
 *       - application/json
@@ -140,31 +140,31 @@ module.exports = function(router){
 *           $ref: '#/definitions/LoginRequest'
 *     responses:
 *       200:
-*         description: An array of Franchisees
+*         description: An array of Sellers
 *         schema:
-*           $ref: '#/definitions/Franchisee'
+*           $ref: '#/definitions/Seller'
 */
 	router.post('/v2.0/party/user/login', 
 		auth.verifyWithBasicAuth, 
-		roleBasedAccess.rolesAllowedForBasic('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
-		franchiseeController.loginV20),
+		roleBasedAccess.rolesAllowedForBasic('USER','ADMIN','SUPER_ADMIN'),
+		sellerController.loginV20),
 
 
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/party/user/forgotpassword:
 *   post:
 *     security:
 *       - basicAuth: []
 *     tags:
-*       - Franchisee
+*       - Seller
 *     description: Sends email with temporary password and return status true else returns false.
 *     produces:
 *       - application/json
 *     parameters:
 *       - name: ForgotPassword
-*         description: Authid has to be passed for the franchisee who forgotten his password.
+*         description: Authid has to be passed for the seller who forgotten his password.
 *         in: body
 *         required: true
 *         schema:
@@ -177,28 +177,28 @@ module.exports = function(router){
 */
 	router.post('/v1.0/party/user/forgotpassword', 
 		auth.verifyWithBasicAuth, 
-		roleBasedAccess.rolesAllowedForBasic('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
-		franchiseeController.forgotPassword),
+		roleBasedAccess.rolesAllowedForBasic('USER','ADMIN','SUPER_ADMIN'),
+		sellerController.forgotPassword),
 
 /**
-* @swaggers
+* @swagger
 * /v1.0/party/user/verifyOtp:
 *   get:
 *     security:
 *       - basicAuth: []
 *     tags:
-*       - Franchisee
+*       - Seller
 *     description: Returns true or false based on the otp verification.
 *     produces:
 *       - application/json
 *     parameters:
 *       - name: authId
-*         description: auth id of Franchisee 
+*         description: auth id of Seller 
 *         in: query
 *         required: true
 *         type: string
 *       - name: otpNo
-*         description: OTP (temporary password) received to franchisee email address.
+*         description: OTP (temporary password) received to seller email address.
 *         in: query
 *         required: true
 *         type: string
@@ -210,20 +210,20 @@ module.exports = function(router){
 */
 	router.get('/v1.0/party/user/verifyOtp', 
 		auth.verifyWithBasicAuth, 
-		roleBasedAccess.rolesAllowedForBasic('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
-		franchiseeController.verifyOtp)
+		roleBasedAccess.rolesAllowedForBasic('USER','ADMIN','SUPER_ADMIN'),
+		sellerController.verifyOtp)
 
 
 /**
 * @swaggers
-* /v1.0/franchisee/discover:
+* /v1.0/seller/discover:
 *   get:
 *     security:
 *       - Bearer: []
 *     tags:
-*       - Franchisee
+*       - Seller
 *     description: |
-*                  Returns list of Franchisees who are all opened on given date.
+*                  Returns list of Sellers who are all opened on given date.
 *                  This API spec is mainly used for customers .
 *     produces:
 *       - application/json
@@ -237,12 +237,12 @@ module.exports = function(router){
 *       200:
 *         description: a successful response
 *         schema:
-*           $ref: '#/definitions/Franchisee'
+*           $ref: '#/definitions/Seller'
 */
-router.get('/v1.0/franchisee/discover', 
+router.get('/v1.0/seller/discover', 
 	auth.verifyWithJwt, 
 	roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
-	franchiseeController.discover)
+	sellerController.discover)
 }
 
 

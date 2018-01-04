@@ -35,7 +35,7 @@ module.exports = function(router){
 *         type: string
 *       status:
 *         type: boolean
-*       franchiseeId:
+*       sellerId:
 *         type: number
 *   OrderThreshold:
 *     properties:
@@ -118,7 +118,7 @@ module.exports = function(router){
 *         type: string
 *       postCode:
 *         type: string
-*   FranchiseeScheduleRequest:
+*   SellerRegion:
 *     properties:
 *       shopStatus:
 *         type: string
@@ -148,7 +148,7 @@ module.exports = function(router){
 *         type: array
 *         items:
 *           type: string
-*   FranchiseeRequest:
+*   SellerRequest:
 *     properties:
 *       status:
 *         type: string
@@ -156,38 +156,23 @@ module.exports = function(router){
 *         enum:
 *           - ACTIVE
 *           - INACTIVE
-*       franchiseType:
+*       sellerType:
 *         type: string
-*         default: FRANCHISE
+*         default: SELLER
 *         enum:
-*           - FRANCHISE
+*           - SELLER
 *           - ADMIN
-*       menuType:
-*         type: string
-*         default: MENUTYPE_1
-*         enum:
-*           - MENUTYPE_1
-*           - MENUTYPE_2
-*           - MENUTYPE_3
 *       profileImage:
 *         type: string
-*       franchiseeName:
+*       sellerName:
 *         type: string
-*       franchisorName:
+*       emailId:
 *         type: string
-*       phoneNumber:
-*         type: string
-*       orderThreshold:
-*           $ref: '#/definitions/OrderThreshold'
 *       authentication:
 *           $ref: '#/definitions/Authentication'
-*       franchiseeSchedule:
-*         type: array
-*         items:
-*           $ref: '#/definitions/FranchiseeScheduleRequest'
-*   Franchisee:
+*   Seller:
 *     properties:
-*       franchiseeId:
+*       sellerId:
 *         type: number
 *       status:
 *         type: string
@@ -195,37 +180,26 @@ module.exports = function(router){
 *         enum:
 *           - ACTIVE
 *           - INACTIVE
-*       franchiseType:
+*       sellerType:
 *         type: string
-*         default: FRANCHISE
+*         default: SELLER
 *         enum:
-*           - FRANCHISE
+*           - SELLER
 *           - ADMIN
-*       menuType:
-*         type: string
-*         default: MENUTYPE_1
-*         enum:
-*           - MENUTYPE_1
-*           - MENUTYPE_2
-*           - MENUTYPE_3
 *       profileImage:
 *         type: string
-*       franchiseeName:
+*       sellerName:
 *         type: string
-*       franchisorName:
+*       emailId:
 *         type: string
-*       phoneNumber:
-*         type: string
-*       orderThreshold:
-*           $ref: '#/definitions/OrderThreshold'
 *       device:
 *           $ref: '#/definitions/Device'
 *       authentication:
 *           $ref: '#/definitions/Authentication'
-*       franchiseeSchedule:
+*       region:
 *         type: array
 *         items:
-*           $ref: '#/definitions/FranchiseeSchedule'
+*           type: string
 *   CustomerRequest:
 *     properties:
 *       firstName:
@@ -373,6 +347,12 @@ module.exports = function(router){
 *           - TAKE_AWAY
 *           - CASH_ON_DELIVERY
 *           - PAYTM
+*       orderType:
+*         type: string
+*         default: CART
+*         enum:
+*           - CART
+*           - CAMERA
 *       orderedOn:
 *         type: string
 *         format: date-time
@@ -388,7 +368,7 @@ module.exports = function(router){
 *         type: number
 *       customerId:
 *         type: number
-*       franchiseeId:
+*       sellerId:
 *         type: number
 *       stripeToken:
 *         type: string
@@ -646,6 +626,12 @@ module.exports = function(router){
 *         type: array
 *         items:
 *           type: string
+*   Region:
+*     properties:
+*       name: 
+*         type: string
+*       sellerId: 
+*         type: number
 *   HomeSlider:
 *     properties:
 *       name: 
@@ -682,6 +668,10 @@ module.exports = function(router){
 *         type: array
 *         items:
 *           $ref: '#/definitions/HomeSlider'
+*       regionList:
+*         type: array
+*         items:
+*           $ref: '#/definitions/Region'
 *   ReferenceDataRequest:
 *     properties:
 *       dayDeals:
@@ -704,6 +694,10 @@ module.exports = function(router){
 *         type: array
 *         items:
 *           $ref: '#/definitions/HomeSlider'
+*       regionList:
+*         type: array
+*         items:
+*           $ref: '#/definitions/Region'
 *
 */
 

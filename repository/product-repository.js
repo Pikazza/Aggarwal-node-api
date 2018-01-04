@@ -1,7 +1,6 @@
 'use strict';
 
-const product = require('../models/product').Product;
-const franchiseeRepository = require('../repository/franchisee-repository'); 
+const product = require('../models/product').Product; 
 
 module.exports.findProductById =  (ptyId, next) => {
 

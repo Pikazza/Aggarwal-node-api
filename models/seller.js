@@ -9,45 +9,43 @@ Schema = mongoose.Schema;
  * @description contain the details of party information, conditions and actions.
  */
 const statusType= ['ACTIVE','INACTIVE'];
-const franchiseType= ['FRANCHISE','ADMIN'];
-const roleType= ['USER','FRANCHISE_ADMIN','HAOCHII_ADMIN'];
-const shopStatus= ['OPEN','CLOSE']; 
-const menuType = ['MENUTYPE_1','MENUTYPE_2','MENUTYPE_3'];
+const sellerType= ['SELLER','ADMIN'];
+const roleType= ['USER','ADMIN','SUPER_ADMIN'];
 let validateEmail = function(authId) {
     //let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     let regx=/^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return regx.test(authId)
 };
 
-let franchiseeSchema = new Schema({
-    franchiseeId:{
+let sellerSchema = new Schema({
+    sellerId:{
       type: Number,
       unique: true
     },
     status: {type: String, enum: statusType},
-    franchiseType: {type: String, enum: franchiseType},
-    menuType: {type: String, enum: menuType},
+    sellerType: {type: String, enum: sellerType},
     profileImage: String,
-    franchiseeName: {
+    sellerName: {
       type: String,
       trim: true,
       required: true,
       minlength: 1,
       maxlength: 30
     },
-    franchisorName: {
+    sellerName: {
       type: String,
       trim: true,
       required: true,
       minlength: 1,
       maxlength: 30
     },
-    phoneNumber: {
-      type: String,
-      trim: true,
-      required: true,
-      minlength: 10,
-      maxlength: 12
+    emailId: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        unique: true,
+        required: true,
+        validate: [validateEmail, 'Please fill a valid email address']
     },
     createdOn: {
         type: Date
@@ -56,24 +54,23 @@ let franchiseeSchema = new Schema({
       type: Date, 
       default: Date.now
       },
-      orderThreshold:{
-    minOrder:String,
-    minDuration:String,
-    midOrder:String,
-    midDuration:String,
-    maxOrder:String,
-    maxDuration:String
-  },
+    orderThreshold:{
+      minOrder:String,
+      minDuration:String,
+      midOrder:String,
+      midDuration:String,
+      maxOrder:String,
+      maxDuration:String
+    },
     authentication: {
       authMech:String,
   		authId:{
         type: String,
         trim: true,
-        lowercase: true,
-        unique: true,
         required: true,
-        validate: [validateEmail, 'Please fill a valid email address']
-        },
+        minlength: 10,
+        maxlength: 12
+         },
   		authToken:String,
   		role:{
         type: String,
@@ -85,29 +82,27 @@ let franchiseeSchema = new Schema({
       }
   	},
     device: {
-    	deviceId:String,
-		deviceType:String,
-		deviceToken:String
-	}
-}, { collection: 'franchisee' });
+      deviceId:String,
+		  deviceType:String,
+		  deviceToken:String
+	},
+  regionList:String
+}, { collection: 'seller' });
 
 
 
-let franchisee = mongoose.model("franchisee", franchiseeSchema);
+let seller = mongoose.model("seller", sellerSchema);
 //let popupShopScheduleSchema = mongoose.model("party", popupShopScheduleSchema);
 
-let validateFranchisee = function(reqFranchisee,next){
+/*let validateFranchisee = function(reqFranchisee,next){
   let  valideFranchisee = new franchisee(reqFranchisee);
   let validationErr = valideFranchisee.validateSync();
   if (validationErr) {
     next(new ValidationError(validationErr));
   }
-}
-
-
+}*/
 
 
 module.exports = {
-    Franchisee: franchisee ,
-    ValidateFranchisee :validateFranchisee
+    Seller: seller 
 };

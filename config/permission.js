@@ -31,3 +31,19 @@ module.exports.rolesAllowedForBasic = (...allowed) => {
 		}
 	}
 }
+
+module.exports.rolesAllowedForAccAuth = (...allowed) => {
+
+	function isAllowed(userRole){
+		return allowed.findIndex(i => i == userRole) > -1;
+	} 
+  
+	return (req, res, next) => {
+		if (isAllowed(req.user)){
+		  	next(); 
+		}
+		else {
+		  	next(new AccessDeniedError("Access Denaid for current role with account authentication"));
+		}
+	}
+}

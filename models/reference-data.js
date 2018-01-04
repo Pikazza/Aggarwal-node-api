@@ -16,13 +16,19 @@ let sliderSchema = new Schema({
     status:String
 })
 
+let regionSchema = new Schema({
+    name:String,
+    sellerId:String
+})
+
 let referenceDataSchema = new Schema({
 	dailyNeeds:[String],
     dealOfTheDay:[String],
     homeTopSlider:[homeTopSliderSchema],
     homebottomSlider:[sliderSchema],
     medicosSlider:[sliderSchema],
-    opticalsSlider:[sliderSchema]
+    opticalsSlider:[sliderSchema],
+    regionList:[regionSchema]
     },{ collection: 'referenceData' });
 
 

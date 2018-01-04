@@ -1,14 +1,9 @@
 'use strict';
 
 const jwtAuth = require('../config/basic-jwt-auth');
-const franchisee = require('../models/franchisee').Franchisee;
-const franchiseeSchedule = require('../models/franchisee-schedule').FranchiseeSchedule;
-const FranchiseeRequest = require('../models/franchisee-request').FranchiseeRequest;
-const franchiseeMenu = require('../models/product').Product;  
-const franchiseeRepository = require('../repository/franchisee-repository'); 
-const franchiseeMenuRepository = require('../repository/product-repository'); 
-const referenceMenuRepository = require('../repository/reference-menu-repository'); 
-const franchiseeScheduleRepository = require('../repository/franchisee-schedule-repository'); 
+const seller = require('../models/seller').Seller;
+const product = require('../models/product').Product;  
+const sellerRepository = require('../repository/seller-repository');  
 const apiUtils = require('../util/api-utils');  
 const SequenceImpl = require('../service-impl/sequence');
 const mailer = require('../util/mail-sender');
@@ -16,17 +11,17 @@ const PartyAlreadyExistError = require('../exceptions/party-already-exist-error'
 const PartyNotFoundError = require('../exceptions/party-not-found-error');
 const PasswordNotFound = require('../exceptions/password-not-match');
 const OTPValidationError = require('../exceptions/otp-validation-error');
-
+const referenceDataRepository = require('../repository/reference-data-repository');
 
 module.exports.getAll = (req, res, next) => {
-		  franchiseeRepository.findAll(function(err, result) {
+		  sellerRepository.findAll(function(err, result) {
 		  if (err) next(err);
 		  next(null, result);
 	}); 
 };
 
 module.exports.getById = (franchiseeId, next) => {
-	franchiseeRepository.findByFranchiseeId(franchiseeId, function(err, result) {
+	sellerRepository.findBysellerId(franchiseeId, function(err, result) {
 		if (err){
 			next(err);			
 		}
@@ -34,8 +29,8 @@ module.exports.getById = (franchiseeId, next) => {
 		next(new PartyNotFoundError("There is no party found for given partyid "+franchiseeId));
 		}
 		else{
-			let res = new FranchiseeRequest(result);
-			franchiseeScheduleRepository.getScheduleByFranchiseeId(franchiseeId, function(err, result){
+			//let res = new FranchiseeRequest(result);
+			/*franchiseeScheduleRepository.getScheduleByFranchiseeId(franchiseeId, function(err, result){
 	  			if (err){
 		  			next(err);
 		  		}else{	
@@ -44,72 +39,51 @@ module.exports.getById = (franchiseeId, next) => {
 		  			}
 	  				next(null, res);
 		  		}
-  			});
+  			});*/
+  			referenceDataRepository.findRegions(franchiseeId,function(err, result1) {
+		  if (err) next(err);
+		 // next(null, result);
+		 console.log("Pikazza 000000 "+result1)
+		 result.regionList=result1;
+		 next(null, result);
+	}); 
+  			
+  			
 		}	
 	});		
 };
 
 module.exports.create = (partyReq, next) => { 
-	franchiseeRepository.findByAuthId(partyReq.authentication.authId, function(err, result) {
+	sellerRepository.findByAuthId(partyReq.authentication.authId, function(err, result) {
 	if (err){
 		next(err);
 	}
 	if(result){
 		next(new PartyAlreadyExistError("The Email Address is Already Registered "+partyReq.authentication.authId));
 	}else{
-			SequenceImpl.getSequence("franchisee", function(err, sequenceId){
+			SequenceImpl.getSequence("seller", function(err, sequenceId){
 		  	if (err){
 		  		next(err);
 		  	}
 		  	else{
 		  		console.log("its coming ")
-		  		partyReq.franchiseeId=sequenceId;
-		  		partyReq.createdOn= new Date();
-		  		let emailId = partyReq.authentication.authId;
+		  		var sell = new seller(partyReq);
+		  		sell.sellerId=sequenceId;
+		  		sell.createdOn= new Date();
+		  		let mobileNo = partyReq.authentication.authId;
 		  		let plainPass = partyReq.authentication.authToken;
-		  		partyReq.authentication.authToken=apiUtils.encyptAuthToken(plainPass);
+		  		sell.authentication.authToken=apiUtils.encyptAuthToken(plainPass);
 				if(partyReq.profileImage){
 				var	random=Math.floor(Math.random() * 200000);
-				var path = apiUtils.uploadImage(partyReq.franchiseeName+"_fr_cover"+random,partyReq.profileImage);
-				partyReq.profileImage=path
+				var path = apiUtils.uploadImage(partyReq.sellerhiseeName+"_fr_cover"+random,partyReq.profileImage);
+				sell.profileImage=path
 				}
-				franchiseeRepository.create(partyReq, function(err, result) {
+				sellerRepository.create(sell, function(err, result) {
 			  	if (err){
 			  		next(err);
 			  	} 
 			  	else{
-
-					let res = new FranchiseeRequest(result);
-			  		let franScheduleReq = new franchiseeSchedule(partyReq.franchiseeSchedule);
-			  		franScheduleReq.franchiseeId=sequenceId;
-			  		franScheduleReq.schedule=partyReq.franchiseeSchedule;
-			  		franchiseeScheduleRepository.create(franScheduleReq, function(err, result){
-			  			if (err){
-				  		next(err);
-				  	}else{
-				  		
-				  		referenceMenuRepository.findByFranchisorNameAndMenuType(partyReq.franchisorName,partyReq.menuType , function(err, result){
-				  			if (err){
-					  			next(err);
-					  		}else{
-				  				let franchiseeMenuReq = new franchiseeMenu();
-				  				franchiseeMenuReq.franchiseeId=sequenceId;
-				  				franchiseeMenuReq.menuType=result.menuType;
-				  				franchiseeMenuReq.menuItem=result.menuItem;
-				  				//validatefranchiseeMenu(franchiseeMenuReq, next);
-				  				franchiseeMenuRepository.create(franchiseeMenuReq,function(err, result ){
-					  				if (err){
-						  				next(err);
-						  			}
-				  				});
-					  			}
-			  			});
-
-				  		res.franchiseeSchedule=result.schedule;
-				  		mailer.MailSender(emailId,plainPass,"","REG_TRADER");
-			  			next(null, res);	
-				  	}
-			  		});
+			  		next(null, result);
 			  	}
 					
 				});
@@ -121,7 +95,7 @@ module.exports.create = (partyReq, next) => {
 
 module.exports.update = (franchiseeId, partyReq, next) => {
 
-	franchiseeRepository.findByFranchiseeId(franchiseeId, function(err, oneFranchisee) {
+	sellerRepository.findByFranchiseeId(franchiseeId, function(err, oneFranchisee) {
 		  if (err){
 		  	next(err);
 		  }
@@ -156,7 +130,7 @@ module.exports.update = (franchiseeId, partyReq, next) => {
 				pty.orderThreshold.maxOrder=partyReq.orderThreshold.maxOrder;
 				pty.orderThreshold.maxDuration=partyReq.orderThreshold.maxDuration;
 			}
-			franchiseeRepository.update(pty, function(err, franchiseeResponse) {
+			sellerRepository.update(pty, function(err, franchiseeResponse) {
 				if(err) {
 					next(err);
 				}
@@ -199,7 +173,7 @@ module.exports.update = (franchiseeId, partyReq, next) => {
 }
 
 module.exports.login = (authId, authToken, next) => {
-	franchiseeRepository.findByAuthId(authId, function(err, result) {
+	sellerRepository.findByAuthId(authId, function(err, result) {
 		if(err) next(err, null);
 		if(!result) {
 			next(new PartyNotFoundError("There is no Records found for Franchisee id "+authId));
@@ -214,7 +188,7 @@ module.exports.login = (authId, authToken, next) => {
 }; 
 
 module.exports.loginV20 = (loginRequest, next) => {
-	franchiseeRepository.findByAuthId(loginRequest.authId, function(err, result) {
+	sellerRepository.findByAuthId(loginRequest.authId, function(err, result) {
 		if(err) next(err, null);
 		if(!result) {
 			next(new PartyNotFoundError("There is no Records found for Franchisee id "+loginRequest.authId));
@@ -226,15 +200,15 @@ module.exports.loginV20 = (loginRequest, next) => {
 				result.device.deviceToken=loginRequest.deviceToken;
 				let token= jwtAuth.getJwt(result.franchiseeId,result.authentication.authId,result.franchiseeName,result.firstName,
 						   result.lastName,result.franchiseType,result.authentication.role);
-				franchiseeRepository.updateV20(result, function(err, updateResult) {
-					next(null, {"party":result,"jwtToken":token});
+				sellerRepository.updateV20(result, function(err, updateResult) {
+					next(null, result);
 					});	
 		}
 	});
 };
 
 module.exports.forgotPassword = (authId, next) => {
-	franchiseeRepository.findByAuthId(authId, function(err, result) {
+	sellerRepository.findByAuthId(authId, function(err, result) {
 		if(err){
 			next(err, null);
 		} 
@@ -245,8 +219,8 @@ module.exports.forgotPassword = (authId, next) => {
 			let random = (Math.random()*1e16).toString(36);
 			pty.authentication.tempToken=random;
 			pty.authentication.tempTokenExpiredOn=new Date().addHours(48);
-				franchiseeRepository.update(pty, function(err, result) {
-				mailer.MailSender(pty.authentication.authId,"",pty.authentication.tempToken,"FORGOT_PASSWORD");
+				sellerRepository.update(pty, function(err, result) {
+				//mailer.MailSender(pty.authentication.authId,"",pty.authentication.tempToken,"FORGOT_PASSWORD");
 				next(null, "true");
 					});			
 		}
@@ -256,7 +230,7 @@ module.exports.forgotPassword = (authId, next) => {
 
 module.exports.verifyOtp = (authId, otp, next) => {
 
-	franchiseeRepository.findByAuthId(authId, function(err, result) {
+	sellerRepository.findByAuthId(authId, function(err, result) {
 		if(err) {
 			next(err, null);
 		}
@@ -278,7 +252,7 @@ module.exports.verifyOtp = (authId, otp, next) => {
 };
 
 module.exports.discover = (startDate, endDate, next) => {
-	franchiseeRepository.findOpenedFranchisees(startDate, endDate,function(err, result){
+	sellerRepository.findOpenedFranchisees(startDate, endDate,function(err, result){
 		if (err) {
 			next(err);
 		}

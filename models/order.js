@@ -1,6 +1,5 @@
 'use strict';
 const ValidationError = require('../exceptions/validation-error');
-const franchisee = require('./franchisee').Franchisee;
 const customer = require('./customer').Customer;
 
 const mongoose = require('mongoose'),
@@ -9,6 +8,7 @@ Schema = mongoose.Schema;
 const orderType = ['INITIALIZED','ACCEPTED', 'READY_TO_COLLECT','COMPLETED','CANCELED'];
 const paymentType= ['INITIALIZED','SUCCESSFUL','PENDING','CANCELED'];
 const serviceTypeEnum= ['TAKE_AWAY','PAYTM','CASH_ON_DELIVERY'];
+const orderTypeEnum= ['CART','CAMERA'];
 const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER'];
 
 let imagesScheme = new Schema({
@@ -31,6 +31,7 @@ let orderSchema = new Schema({
 	    orderedOn:Date,
 	    totalAmountToBePaid:Number,
 	    serviceType:{type: String, enum: serviceTypeEnum},
+	    orderType:{type: String, enum: orderTypeEnum},
 	    orderingCharge:{
 	    	totalProductAmount:Number,
 	    	deleveryCharge:Number,

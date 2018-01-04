@@ -1,18 +1,18 @@
 'use strict';
 
-const franchiseeServiceImpl = require('../service-impl/franchisee-service-impl');
+const sellerServiceImpl = require('../service-impl/seller-service-impl');
 const jwtAuth = require('../config/basic-jwt-auth');
-const franchisee = require('../models/franchisee');
+const seller = require('../models/seller');
 const auth = require('basic-auth');
 const logger = require('../config/logger');
-const validateFranchiseeRequest = require('../models/franchisee-request');
+const validatesellerRequest = require('../models/seller-request');
 const validateLoginRequest = require('../models/login-request');
 const apiUtils = require('../util/api-utils');
 
 exports.get = (req, res, next) => {
-	if(req.query.franchiseeId){
-		logger.info("Getting franchisee by id "+req.query.franchiseeId);
-		franchiseeServiceImpl.getById(req.query.franchiseeId, function (err , result){
+	if(req.query.sellerId){
+		logger.info("Getting seller by id "+req.query.sellerId);
+		sellerServiceImpl.getById(req.query.sellerId, function (err , result){
 			if (err) {
 				next(err);
 			} 
@@ -22,8 +22,8 @@ exports.get = (req, res, next) => {
 		});
 	}
 	else{
-		logger.info("Getting All franchisee....");
-		franchiseeServiceImpl.getAll(req,res, function (err , result){
+		logger.info("Getting All seller....");
+		sellerServiceImpl.getAll(req,res, function (err , result){
 			if (err) {
 				next(err);
 			}
@@ -35,9 +35,9 @@ exports.get = (req, res, next) => {
 };
 
 exports.add = (req, res, next) => {
-	logger.info("Rigistering new franchisee..");
-	validateFranchiseeRequest.ValidateFranchiseeRequest(req.body, next);
-    franchiseeServiceImpl.create(req.body, function (err , result){
+	logger.info("Rigistering new seller..");
+	//validatesellerRequest.ValidatesellerRequest(req.body, next);
+    sellerServiceImpl.create(req.body, function (err , result){
 		if (err) {
 			next(err);
 		}
@@ -49,9 +49,9 @@ exports.add = (req, res, next) => {
 
 
 exports.update = (req, res, next) => {
-	logger.info("Updating existing franchisee..");
-	franchisee.ValidateFranchisee(req.body, next);
-    franchiseeServiceImpl.update(req.params.franchiseeId, req.body, function (err , result){
+	logger.info("Updating existing seller..");
+	seller.Validateseller(req.body, next);
+    sellerServiceImpl.update(req.params.sellerId, req.body, function (err , result){
 		if (err) next(err);
 		res.status(200).json(result);
 	});
@@ -59,9 +59,9 @@ exports.update = (req, res, next) => {
 
 exports.login = (req, res, next) => {
 	let pty = auth(req);
-	logger.info(pty.name+" Franchisee Logging in " );
+	logger.info(pty.name+" seller Logging in " );
 	if (pty || pty.name  || pty.pass) {
-        franchiseeServiceImpl.login(pty.name,pty.pass, function (err , result){
+        sellerServiceImpl.login(pty.name,pty.pass, function (err , result){
 		if (err){
 			next(err) ;
 		}else{
@@ -74,10 +74,10 @@ exports.login = (req, res, next) => {
 }; 
 
 exports.loginV20 = (req, res, next) => {
-logger.info(" Franchisee Logging in V20" );
+logger.info(" seller Logging in V20" );
 let verified =validateLoginRequest.ValidateLoginRequest(req.body, next);
 	if(verified && req.body){
-	        franchiseeServiceImpl.loginV20(req.body, function (err , result){
+	        sellerServiceImpl.loginV20(req.body, function (err , result){
 			if (err){
 				next(err);
 			}else{
@@ -88,8 +88,8 @@ let verified =validateLoginRequest.ValidateLoginRequest(req.body, next);
 }; 
 
 exports.forgotPassword = (req, res, next) => {
-	logger.info(req.body.authId +" Franchisee Forgotten his Password  ");
-    franchiseeServiceImpl.forgotPassword(req.body.authId, function (err , result){
+	logger.info(req.body.authId +" seller Forgotten his Password  ");
+    sellerServiceImpl.forgotPassword(req.body.authId, function (err , result){
 		if (err){
 			next(err) ;
 		}else{
@@ -99,8 +99,8 @@ exports.forgotPassword = (req, res, next) => {
 }; 
 
 exports.verifyOtp = (req, res, next) => {
-	logger.info(req.query.authId +" Franchisee verifing his OTP with "+req.query.otpNo);
-    franchiseeServiceImpl.verifyOtp(req.query.authId, req.query.otpNo, function (err , result){
+	logger.info(req.query.authId +" seller verifing his OTP with "+req.query.otpNo);
+    sellerServiceImpl.verifyOtp(req.query.authId, req.query.otpNo, function (err , result){
 		if (err){
 			next(err) ;
 		}else{
@@ -114,7 +114,7 @@ exports.discover = (req, res, next) => {
 	var endDate = apiUtils.getValidEndDate(req.query.onDate);
 	console.log(startDate);
 	console.log(endDate);
-	franchiseeServiceImpl.discover(startDate, endDate, function (err , result){
+	sellerServiceImpl.discover(startDate, endDate, function (err , result){
 		if (err){
 			next(err) ;
 		}else{

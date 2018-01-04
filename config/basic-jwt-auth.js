@@ -7,6 +7,8 @@ const logger = require('../config/logger');
 const CustomError = require('../exceptions/custom-error');
 const UnauthorizedAccessError = require('../exceptions/unauthorized-access-error');
 const Props = require('../util/api-properties');
+const sellerRepository = require('../repository/seller-repository');  
+const apiUtils = require('../util/api-utils');  
 
 module.exports.getJwt = (ptyId,authId,ptyName,fName,lName,ptyType,role) => {
 		let jwtUserDate = {
@@ -108,3 +110,45 @@ module.exports.verifyWithBasicAuth = (req, res, next) => {
 };
 
 
+module.exports.verifyWithAccAuth = (req, res, next) => {
+    logger.info("Account verification starts..");
+    if (!(req.headers.authorization)){
+         next(new UnauthorizedAccessError("authorization header is empty"));
+    }
+    else{
+        let token = exports.fetch(req.headers,next);
+        if(!(token)){
+            next(new UnauthorizedAccessError("Please Enter Proper Basic Authorization Token"));
+        }
+        else if(token[0] == 'Basic' && token[1])  {
+            let credentials = auth(req);
+
+             if (!credentials || credentials.name || credentials.pass) {
+
+                sellerRepository.findByAuthId(credentials.name, function(err, result) {
+                    if (err){
+                        next(err);          
+                    }
+                    if(!result) {
+                    next(new UnauthorizedAccessError("There is no party found for given partyid "+ credentials.name));
+                    }
+                    else{
+                        if (apiUtils.encyptAuthToken(credentials.pass) != result.authentication.authToken) {
+                        next(new UnauthorizedAccessError("Basic authorization is failed"));
+                    } else {
+                        req.user=result.authentication.role;
+                        console.log("current user role is"+req.user)
+                        next(null, true);
+                    }
+                      //  next(null, result);
+
+                    }   
+                });
+            }
+
+        }else{
+            next(new UnauthorizedAccessError("authorization header is invalid"));
+        }
+    }
+
+};

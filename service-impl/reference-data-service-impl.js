@@ -133,6 +133,24 @@ module.exports.update = (refReq, next) => {
 				});
 			}
 			
+			if (refReq.regionList){
+
+				_.forEach(refReq.regionList, function(region){
+					if(region._id && prod.regionList){
+						_.map(prod.regionList, function(obj){
+							  if(obj._id==region._id) {
+							     obj.status=region.status;
+							      obj.sellerId=region.sellerId;
+							  }
+						});			
+					}
+					else{
+						console.log("id is not there");
+						prod.regionList.push(region);
+					}									
+				});
+			}
+
 			referenceDataRepository.update(prod, function(err, result) {
 				if(err) {
 					next(err);

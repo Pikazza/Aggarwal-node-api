@@ -6,7 +6,6 @@ import mongoose from 'mongoose';
 import jwt from 'express-jwt';
 import db from './config/db-config';
 import routes from './routes/index';
-import parties from './routes/party';
 import logger from './config/logger';
 import Props from'./util/api-properties';
 import fs from 'fs';
@@ -28,11 +27,12 @@ router.use(cors());
 router.options('*', cors());
 
 require('./routes/index')(router);
-require('./routes/party')(router);
+require('./routes/seller')(router);
 require('./routes/customer')(router);
 require('./routes/product')(router);
 require('./routes/category')(router);
 require('./routes/order')(router);
+require('./routes/checksum')(router);
 require('./routes/reference-data')(router);
 require('./exceptions/error-middleware')(router);
 

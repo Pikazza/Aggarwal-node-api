@@ -1,7 +1,6 @@
 'use strict';
 
 const category = require('../models/category').Category;
-const franchiseeRepository = require('../repository/franchisee-repository'); 
 
 module.exports.findProductById =  (ptyId, next) => {
 	category.findOne({"categoryId":ptyId}, function(err, result) {
