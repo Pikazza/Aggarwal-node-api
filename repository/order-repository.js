@@ -21,7 +21,7 @@ module.exports.findAll = (userType, userId, next) => {
     order.
     find(query).
 	populate({path:'customerDetails', select:'customerId firstName lastName profileImage emailId addresses'}).
-    populate({path:'franchiseeDetails', select:'franchiseeId franchiseeName profileImage phoneNumber '}).
+    populate({path:'sellerDetails', select:'sellerId selerName profileImage emailId '}).
     exec(function(err, result) {
 		if (err) next(err);
 		next(null, result);
@@ -53,8 +53,8 @@ module.exports.findByOrderId = (userType, userId, orderId, next) => {
 		path:'customerDetails', 
 		select:'customerId firstName lastName profileImage emailId addresses'})
     .populate({
-    	path:'franchiseeDetails',
-    	 select:'franchiseeId franchiseeName profileImage phoneNumber '})
+    	path:'sellerDetails',
+    	 select:'sellerId sellerName profileImage emailId '})
     .exec(function(err, result) {
 		if (err) next(err);
 		next(null, result);

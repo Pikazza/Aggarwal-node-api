@@ -87,11 +87,11 @@ let sellerSchema = new Schema({
 		  deviceToken:String
 	},
   regionList:String
-}, { collection: 'seller' });
+}, { collection: 'franchisee' });
 
 
 
-let seller = mongoose.model("seller", sellerSchema);
+let seller = mongoose.model("franchisee", sellerSchema);
 //let popupShopScheduleSchema = mongoose.model("party", popupShopScheduleSchema);
 
 /*let validateFranchisee = function(reqFranchisee,next){
