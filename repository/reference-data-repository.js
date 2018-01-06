@@ -67,3 +67,16 @@ module.exports.update = function (productReq, next) {
 			}
 		});
 };
+
+
+module.exports.findSellerIdFromRegion =  ( name, next) => {
+		//console.log("coming to ref date repo  " +refId);
+	referenceData.find( {"regionList.name": name},'regionList', function(err, result) {
+		if (err){
+			 next(err);
+		}
+		next(null, result);
+	});
+};
+
+

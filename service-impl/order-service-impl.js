@@ -6,6 +6,8 @@ const order = require('../models/order').Order;
 const OrderNotFoundError= require('../exceptions/order-not-found-error');
 const apiUtils = require('../util/api-utils');
 const _ = require('lodash');
+const referenceDataRepository = require('../repository/reference-data-repository');
+const customerRepository = require('../repository/customer-repository');
 
 module.exports.getAll = (userType, userId, next) => {
 		  orderRepository.findAll(userType, userId, function(err, result) {
@@ -47,7 +49,7 @@ module.exports.create = (orderReq ,next) => {
 	  		next(err);
 	  	}
 	  	else{
-	  		orderReq.orderId=sequenceId;
+
 	  		if(orderReq.listOfItems){
 	  			_.forEach(orderReq.listOfItems, function(item){
 			  		if(item.images){
@@ -60,14 +62,70 @@ module.exports.create = (orderReq ,next) => {
 			  		}
 			  	});
 	  		}
-			orderRepository.create(orderReq ,function(err, result){
-				if(err){
-					next(err);
-				}
-				else{
-					next(null, result)
-				}
-			});
+
+	  		orderReq.orderId=sequenceId;
+	  		let sellerId= 0;
+	  		let address;
+	  		let region;
+				customerRepository.findByCustomerId(orderReq.customerId, function(err, result) {
+					if (err){
+						sellerId= 0;		
+					}
+					else{
+
+						if(result.addresses.length > 0 ){ 
+							address = _.some(result.addresses, [ 'addressType', "DELEVERY" ]);
+						}
+						if(address){
+							_.each(result.addresses, function(resAddress){
+								if(resAddress.addressType ==  "DELEVERY"){
+									region= resAddress.addressLine2;
+								}
+							});
+						}
+						else{
+						//cust.addresses.push(reqAddress);
+						region="";
+						}
+						console.log("pikaza address "+JSON.stringify(region));
+
+						referenceDataRepository.findAll(function(err, result1) {
+							if (err){
+								sellerId= 0;
+							}
+							else{
+								console.log("pikazza phone "+ JSON.stringify(result1));
+													console.log("----------------1")
+								if(result1.regionList){
+									console.log("----------------2")
+									_.forEach(result1.regionList, function(resRegion){
+										if(resRegion.name ==  region){
+										orderReq.sellerId = resRegion.sellerId;
+										console.log("pikaza address seller id"+JSON.stringify(orderReq.sellerId));
+										}
+										else{
+											orderReq.sellerId="1";
+										}
+									});
+								}
+								else{
+								orderReq.sellerId="1";
+								}
+
+								console.log("pikaza address "+JSON.stringify(orderReq));
+									orderRepository.create(orderReq ,function(err, result){
+										if(err){
+											next(err);
+										}
+										else{
+											next(null, result)
+										}
+									});
+
+							}	
+						});
+					}	
+				});	
 		}
 	});
 }

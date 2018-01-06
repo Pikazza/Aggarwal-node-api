@@ -80,8 +80,8 @@ module.exports.findByDate = (userType, userId, startDate, endDate, next) => {
 
     order.
     find(query).
-	populate({path:'customerDetails', select:'customerId firstName lastName profileImage phoneNumber addresses'}).
-    populate({path:'franchiseeDetails', select:'franchiseeId franchiseeName profileImage phoneNumber '}).
+	populate({path:'customerDetails', select:'customerId firstName lastName profileImage email addresses'}).
+    populate({path:'sellerDetails', select:'sellerId sellerName profileImage email '}).
     exec(function(err, result) {
 		if (err) next(err);
 		next(null, result);
@@ -89,6 +89,7 @@ module.exports.findByDate = (userType, userId, startDate, endDate, next) => {
 };
 
 module.exports.create = (orderReq, next) => {
+	console.log("order repository "+ JSON.stringify(orderReq))
 	order.create(orderReq, function(err, result) {
 		if (err)  next(err);
 		next(null, result);

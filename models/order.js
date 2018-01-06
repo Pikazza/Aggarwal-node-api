@@ -22,7 +22,7 @@ let orderSchema = new Schema({
 	      unique: true
 	    },
 	    customerId:{ type: Number },
-	    //franchiseeId:{ type: Number },
+	    sellerId:{ type: Number },
 	    //stripeToken:String,
 	    //stripeFranchiseeId:String,
 	    orderStatus:{type: String, enum: orderType},
@@ -63,10 +63,10 @@ orderSchema.virtual('customerDetails', {
   foreignField: 'customerId',
   justOne: true
 });
-orderSchema.virtual('franchiseeDetails', {
-  ref: 'franchisee',
-  localField: 'franchiseeId',
-  foreignField: 'franchiseeId',
+orderSchema.virtual('sellerDetails', {
+  ref: 'seller',
+  localField: 'sellerId',
+  foreignField: 'sellerId',
   justOne: true
 });
 

@@ -139,7 +139,7 @@ module.exports.update = (refReq, next) => {
 					if(region._id && prod.regionList){
 						_.map(prod.regionList, function(obj){
 							  if(obj._id==region._id) {
-							     obj.status=region.status;
+							     obj.name=region.name;
 							      obj.sellerId=region.sellerId;
 							  }
 						});			

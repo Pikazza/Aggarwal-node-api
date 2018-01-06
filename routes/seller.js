@@ -100,8 +100,8 @@ module.exports = function(router){
 
 
 /**
-* @swagger
-* /v1.0/party/user/login:
+* @swaggers
+* /v1.0/seller/login:
 *   post:
 *     security:
 *       - basicAuth: []
@@ -117,12 +117,12 @@ module.exports = function(router){
 *         schema:
 *           $ref: '#/definitions/Seller'
 */
-	router.post('/v1.0/party/user/login', 
+	router.post('/v0.0/seller/login', 
 		sellerController.login),
 
 /**
 * @swagger
-* /v2.0/party/user/login:
+* /v1.0/seller/login:
 *   post:
 *     security:
 *       - basicAuth: []
@@ -144,7 +144,7 @@ module.exports = function(router){
 *         schema:
 *           $ref: '#/definitions/Seller'
 */
-	router.post('/v2.0/party/user/login', 
+	router.post('/v1.0/seller/login', 
 		auth.verifyWithBasicAuth, 
 		roleBasedAccess.rolesAllowedForBasic('USER','ADMIN','SUPER_ADMIN'),
 		sellerController.loginV20),
@@ -153,7 +153,7 @@ module.exports = function(router){
 
 /**
 * @swagger
-* /v1.0/party/user/forgotpassword:
+* /v1.0/seller/forgotpassword:
 *   post:
 *     security:
 *       - basicAuth: []
@@ -175,14 +175,14 @@ module.exports = function(router){
 *         schema:
 *           $ref: '#/definitions/BooleanResponse'
 */
-	router.post('/v1.0/party/user/forgotpassword', 
+	router.post('/v1.0/seller/forgotpassword', 
 		auth.verifyWithBasicAuth, 
 		roleBasedAccess.rolesAllowedForBasic('USER','ADMIN','SUPER_ADMIN'),
 		sellerController.forgotPassword),
 
 /**
 * @swagger
-* /v1.0/party/user/verifyOtp:
+* /v1.0/seller/verifyOtp:
 *   get:
 *     security:
 *       - basicAuth: []
@@ -208,7 +208,7 @@ module.exports = function(router){
 *         schema:
 *           $ref: '#/definitions/VerifyOTPResponse'
 */
-	router.get('/v1.0/party/user/verifyOtp', 
+	router.get('/v1.0/seller/verifyOtp', 
 		auth.verifyWithBasicAuth, 
 		roleBasedAccess.rolesAllowedForBasic('USER','ADMIN','SUPER_ADMIN'),
 		sellerController.verifyOtp)
