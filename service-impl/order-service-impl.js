@@ -84,24 +84,17 @@ module.exports.create = (orderReq ,next) => {
 							});
 						}
 						else{
-						//cust.addresses.push(reqAddress);
 						region="";
 						}
-						console.log("pikaza address "+JSON.stringify(region));
-
 						referenceDataRepository.findAll(function(err, result1) {
 							if (err){
 								sellerId= 0;
 							}
 							else{
-								console.log("pikazza phone "+ JSON.stringify(result1));
-													console.log("----------------1")
 								if(result1.regionList){
-									console.log("----------------2")
 									_.forEach(result1.regionList, function(resRegion){
 										if(resRegion.name ==  region){
 										orderReq.sellerId = resRegion.sellerId;
-										console.log("pikaza address seller id"+JSON.stringify(orderReq.sellerId));
 										}
 										else{
 											orderReq.sellerId="1";
@@ -111,8 +104,6 @@ module.exports.create = (orderReq ,next) => {
 								else{
 								orderReq.sellerId="1";
 								}
-
-								console.log("pikaza address "+JSON.stringify(orderReq));
 									orderRepository.create(orderReq ,function(err, result){
 										if(err){
 											next(err);

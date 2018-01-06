@@ -8,35 +8,14 @@ module.exports.findBysellerId = (sellerId, next) => {
 };
 
 module.exports.findAll = (next) => {
-	seller.aggregate([
-    {
-        "$lookup": {
-            "from": "sellerSchedule",
-            "localField": "sellerId",
-            "foreignField": "sellerId",
-            "as": "sellerSchedule"
-        }
-    },
-    {"$unwind": "$sellerSchedule"},
-    {"$project": 
-    	{
-	    	"sellerId" : 1,
-			"sellerName" : 1,
-			"franchiseType":1,
-			"profileImage":1,
-			"phoneNumber":1,
-			"menuType":1,
-			"device":1,
-			"authentication":1,
-			"modifiedOn":1,
-			"createdOn":1,
-			"sellerSchedule":"$sellerSchedule.schedule"
+	seller.find({}, function(err, result) {
+		if (err) {
+			next(err);
 		}
-	}
- 	]).exec(function(err, result) {
-		if (err) next(err);
+		else{
+		}
 		next(null, result);
-	}); 
+	});
 };
 
 module.exports.findByAuthId = (authId, next) => {
