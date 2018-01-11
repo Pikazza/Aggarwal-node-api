@@ -75,9 +75,9 @@ module.exports = function(router){
 *         type: string
 *   Location:
 *     properties:
-*       latitude:
+*       lat:
 *         type: string
-*       longitude:
+*       long:
 *         type: string
 *   Authentication:
 *     properties:
@@ -131,23 +131,6 @@ module.exports = function(router){
 *         format: date-time
 *       location:
 *         $ref: '#/definitions/Location'
-*   FranchiseeSchedule:
-*     properties:
-*       shopStatus:
-*         type: string
-*         default: OPEN
-*         enum:
-*           - OPEN
-*           - CLOSE
-*       tradingDate:
-*         type: string
-*         format: date-time
-*       location:
-*         $ref: '#/definitions/Location'
-*       menuOverride:
-*         type: array
-*         items:
-*           type: string
 *   SellerRequest:
 *     properties:
 *       status:
@@ -200,6 +183,8 @@ module.exports = function(router){
 *         type: array
 *         items:
 *           type: string
+*       location:
+*         $ref: '#/definitions/Location'
 *   CustomerRequest:
 *     properties:
 *       firstName:
@@ -698,7 +683,50 @@ module.exports = function(router){
 *         type: array
 *         items:
 *           $ref: '#/definitions/Region'
-*
+*   NotificationRequest:
+*     properties:
+*       notName: 
+*         type: string
+*       notDesc: 
+*         type: string
+*       sendAT: 
+*         type: string
+*         format: date-time
+*       channelType:
+*         type: string
+*         default: ANDROID
+*         enum:
+*           - ANDROID
+*           - IOS
+*       status:
+*         type: string
+*         default: ACTIVE
+*         enum:
+*           - ACTIVE
+*           - INACTIVE
+*   Notification:
+*     properties:
+*       notId: 
+*         type: string
+*       notName: 
+*         type: string
+*       notDesc: 
+*         type: string
+*       sendAT: 
+*         type: string
+*         format: date-time
+*       channelType:
+*         type: string
+*         default: ANDROID
+*         enum:
+*           - ANDROID
+*           - IOS
+*       status:
+*         type: string
+*         default: ACTIVE
+*         enum:
+*           - ACTIVE
+*           - INACTIVE
 */
 
 

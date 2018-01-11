@@ -50,7 +50,7 @@ exports.add = (req, res, next) => {
 
 exports.update = (req, res, next) => {
 	logger.info("Updating existing seller..");
-	seller.Validateseller(req.body, next);
+	//seller.Validateseller(req.body, next);
     sellerServiceImpl.update(req.params.sellerId, req.body, function (err , result){
 		if (err) next(err);
 		res.status(200).json(result);

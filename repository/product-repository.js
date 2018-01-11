@@ -23,6 +23,21 @@ module.exports.findProductById =  (ptyId, next) => {
 
 };
 
+module.exports.search =  (ptyId, next) => {
+
+		product.find( {'$or':[
+			{"itemName": { "$regex": ptyId}},
+			{"category1": { "$regex": ptyId}}, 
+			{"category2": { "$regex": ptyId}}, 
+			{"category3": { "$regex": ptyId}}, 
+			{"category4": { "$regex": ptyId}}
+			 ]}, function(err, result) {
+			if (err) next(err);
+			next(null, result);
+			}); 
+
+};
+
 module.exports.findProductByCategory=  (catOne,catTwo, next) => {
 	console.log(catOne + catTwo);
 	let query={ };

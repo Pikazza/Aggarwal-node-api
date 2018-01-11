@@ -124,7 +124,8 @@ module.exports.verifyWithAccAuth = (req, res, next) => {
             let credentials = auth(req);
 
              if (!credentials || credentials.name || credentials.pass) {
-
+                console.log("name:"+credentials.name)
+                console.log("name:"+credentials.pass)
                 sellerRepository.findByAuthId(credentials.name, function(err, result) {
                     if (err){
                         next(err);          
@@ -133,13 +134,16 @@ module.exports.verifyWithAccAuth = (req, res, next) => {
                     next(new UnauthorizedAccessError("There is no party found for given partyid "+ credentials.name));
                     }
                     else{
+                        console.log("DB checking started "+result.authentication.authToken)
+                        console.log("DB checking started "+apiUtils.encyptAuthToken(credentials.pass))
                         if (apiUtils.encyptAuthToken(credentials.pass) != result.authentication.authToken) {
-                        next(new UnauthorizedAccessError("Basic authorization is failed"));
-                    } else {
-                        req.user=result.authentication.role;
-                        console.log("current user role is"+req.user)
-                        next(null, true);
-                    }
+                            next(new UnauthorizedAccessError("Basic authorization is failed"));
+                        } 
+                        else {
+                            req.user=result.authentication.role;
+                            console.log("current user role is"+req.user)
+                            next(null, true);
+                        }
                       //  next(null, result);
 
                     }   

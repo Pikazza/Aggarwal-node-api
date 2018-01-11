@@ -29,6 +29,16 @@ exports.get = (req, res, next) => {
 			res.status(200).json(result);
 			}
 		});
+	}else if(req.query.searchKey){
+		logger.info("Searching store products... base on ids");
+		productServiceImpl.search(req.query.searchKey, function (err , result){
+			if (err) {
+				next(err);
+			} 
+			else{
+			res.status(200).json(result);
+			}
+		});
 	}else{
 		logger.info("Getting store products...");
 		productServiceImpl.findAllProduct(function (err , result){

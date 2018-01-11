@@ -4,27 +4,12 @@ const productRepository = require('../repository/product-repository');
 
 module.exports.findByCustomerId = (customerId, next) => {
 	console.log("id trying to see is "+customerId)
-	let ss = [];
 	customer.findOne({"customerId":customerId}, function(err, result) {
 		if (err) {
 			next(err);
 		}
 		else{
-			/*if(result.wishList){
-				console.log("wishlisdt item id"+JSON.stringify(result.wishList));
-					_.each(result.wishList, function(wishOne){
-						productRepository.findProductById(wishOne.itemId, function(err, productOne) {
-							if (err){
-								}
-							else{
-					  			wishOne.itemDetails=productOne;
-					  			ss[0]=productOne;
-							}
-						});	
-					});
-			}*/
 		}
-		//result.wishList=ss;
 		next(null, result);
 	});
 };

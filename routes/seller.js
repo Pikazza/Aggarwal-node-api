@@ -71,7 +71,7 @@ module.exports = function(router){
 * /v1.0/seller/{sellerId}:
 *   put:
 *     security:
-*       - Bearer: []
+*       - basicAuth: []
 *     tags: 
 *      - Seller
 *     description: Updates existing Seller

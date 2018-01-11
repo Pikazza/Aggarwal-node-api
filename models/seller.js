@@ -86,7 +86,11 @@ let sellerSchema = new Schema({
 		  deviceType:String,
 		  deviceToken:String
 	},
-  regionList:String
+  regionList:String,
+  location:{
+    lat:String,
+    long:String
+  }
 }, { collection: 'seller' });
 
 

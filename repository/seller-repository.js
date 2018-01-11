@@ -1,6 +1,6 @@
 const seller = require('../models/seller').Seller;
 
-module.exports.findBysellerId = (sellerId, next) => {
+module.exports.findBySellerId = (sellerId, next) => {
 	seller.findOne({"sellerId":sellerId}, function(err, result) {
 		if (err) next(err);
 		next(null, result);

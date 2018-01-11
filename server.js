@@ -33,6 +33,7 @@ require('./routes/product')(router);
 require('./routes/category')(router);
 require('./routes/order')(router);
 require('./routes/checksum')(router);
+require('./routes/notification')(router);
 require('./routes/reference-data')(router);
 require('./exceptions/error-middleware')(router);
 
