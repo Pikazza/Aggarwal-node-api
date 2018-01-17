@@ -39,7 +39,7 @@ module.exports.rolesAllowedForAccAuth = (...allowed) => {
 	} 
   
 	return (req, res, next) => {
-		if (isAllowed(req.user)){
+		if (isAllowed(req.user.role)){
 		  	next(); 
 		}
 		else {

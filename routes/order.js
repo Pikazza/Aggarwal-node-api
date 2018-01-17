@@ -8,6 +8,7 @@ module.exports = function(router) {
 * @swagger
 * /v1.0/order:
 *   get:
+*     deprecated: true
 *     tags:
 *       - Order
 *     description: | 
@@ -56,6 +57,55 @@ module.exports = function(router) {
 		//auth.verifyWithJwt,
 		//roleBasedAccess.rolesAllowedForJWT('USER','HAOCHII_ADMIN','FRANCHISE_ADMIN'),
 		orderController.getOrder),
+
+/** @swagger
+* /v2.0/order:
+*   get:
+*     security:
+*       - basicAuth: []
+*     tags:
+*       - Order
+*     description: | 
+*                    Returns array of order objects based on query param criteria. 
+*                    Query param 'orderId' will return single order object details.
+*                    By passing 'startDate' and 'endDate' in query param will return array of objects in between those range.
+*                    Default 'startDate' and 'endDate' values are current date and date for is YYYY-MM-DD.
+*     produces:
+*       - application/json
+*     parameters:
+*       - name: orderId
+*         description: Order's Id to get a order details.
+*         in: query
+*         required: false
+*         type: integer
+*       - name: startDate
+*         description: start date for listing the orders between date range.
+*         in: query
+*         required: false
+*         type: string
+*       - name: endDate
+*         description: end date for listing the orders between date range.
+*         in: query
+*         required: false
+*         type: string
+*     responses:
+*       200:
+*         description: An array of Orders
+*         schema:
+*           $ref: '#/definitions/Order'
+*       401:
+*         description: Returns unexpected error if it does not meet any required criteria
+*         schema:
+*           $ref: '#/definitions/ErrorModel'
+*       default:
+*         description: Returns unexpected error if it does not meet any required criteria
+*         schema:
+*           $ref: '#/definitions/ErrorModel'
+*/
+	router.get('/v2.0/order',
+		auth.verifyWithAccAuth, 
+		roleBasedAccess.rolesAllowedForAccAuth('USER','ADMIN','SUPER_ADMIN'),
+		orderController.getOrderV20),
 
 /**
 * @swagger

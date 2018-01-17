@@ -48,6 +48,46 @@ exports.getOrder = (req, res, next) => {
 		}
 };
 
+exports.getOrderV20= (req, res, next) => {
+
+	logger.info("the decoded Jwt values is ");
+		if(req.query.orderId){
+			logger.info("Getting order by id "+req.query.orderId);
+			orderServiceImpl.getByOrderId( req.user.type, req.user.id, req.query.orderId, function (err , result){
+				if (err) {
+					next(err);
+				} 
+				else{
+				res.status(200).json(result);
+				}
+			});
+		}
+		else if( req.query.startDate || req.query.endDate){
+			var startDate = apiUtils.getValidStartDate(req.query.startDate);
+			var endDate = apiUtils.getValidEndDate(req.query.endDate);
+			logger.info("Getting orders list by Date from "+startDate +" to "+endDate);
+			orderServiceImpl.getByDate(req.user.type, req.user.id, startDate, endDate, function (err , result){
+				if (err) {
+					next(err);
+				} 
+				else{
+				res.status(200).json(result);
+				}
+			});
+		}
+		else{
+			logger.info("Getting All Orders....");
+			orderServiceImpl.getAll(req.user.type, req.user.id, function (err , result){
+				if (err) {
+					next(err);
+				}
+				else{
+				res.status(200).json(result);
+				}
+			});
+		}
+};
+
 exports.addOrder = (req, res, next) => {
 	logger.info("Placing new Order..");
 	validateOrder(req.body, next);

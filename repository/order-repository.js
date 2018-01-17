@@ -7,9 +7,9 @@ module.exports.findAll = (userType, userId, next) => {
 	if (userType =='ADMIN'){
 		query={ };
 	}
-	else if(userType =='FRANCHISE'){
+	else if(userType =='SELLER'){
 		query = {
-			"franchiseeId":userId
+			"sellerId":userId
 		};
 	}
 	else{
@@ -20,7 +20,7 @@ module.exports.findAll = (userType, userId, next) => {
 
     order.
     find(query).
-	populate({path:'customerDetails', select:'customerId firstName lastName profileImage emailId addresses'}).
+	populate({path:'customerDetails', select:'customerId firstName lastName profileImage emailId addresses authentication.authId'}).
     populate({path:'sellerDetails', select:'sellerId selerName profileImage emailId '}).
     exec(function(err, result) {
 		if (err) next(err);
@@ -35,7 +35,7 @@ module.exports.findByOrderId = (userType, userId, orderId, next) => {
 			"orderId":orderId
 		};
 	}
-	else if(userType =='FRANCHISE'){
+	else if(userType =='SELLER'){
 		query = {
 			"franchiseeId":userId,
 			"orderId":orderId
@@ -51,10 +51,10 @@ module.exports.findByOrderId = (userType, userId, orderId, next) => {
     .findOne(query)
 	.populate({
 		path:'customerDetails', 
-		select:'customerId firstName lastName profileImage emailId addresses'})
+		select:'customerId firstName lastName profileImage emailId addresses authentication.authId'})
     .populate({
     	path:'sellerDetails',
-    	 select:'sellerId sellerName profileImage emailId '})
+    	 select:'sellerId sellerName profileImage emailId authentication.authId'})
     .exec(function(err, result) {
 		if (err) next(err);
 		next(null, result);
@@ -72,16 +72,16 @@ module.exports.findByDate = (userType, userId, startDate, endDate, next) => {
 			} 
 		};
 	}
-	else if(userType =='FRANCHISE'){
-		query={ '$and': [ { "orderedOn": { "$gte": startDate,"$lte": endDate } }, { "franchiseeId": userId } ] };
+	else if(userType =='SELLER'){
+		query={ '$and': [ { "orderedOn": { "$gte": startDate,"$lte": endDate } }, { "selerId": userId } ] };
 	}else{
 		query={ '$and': [ { "orderedOn": { "$gte": startDate,"$lte": endDate } }, { "customerId": userId } ] };
 	}
 
     order.
     find(query).
-	populate({path:'customerDetails', select:'customerId firstName lastName profileImage email addresses'}).
-    populate({path:'sellerDetails', select:'sellerId sellerName profileImage email '}).
+	populate({path:'customerDetails', select:'customerId firstName lastName profileImage email addresses authentication.authId'}).
+    populate({path:'sellerDetails', select:'sellerId sellerName profileImage email authentication.authId'}).
     exec(function(err, result) {
 		if (err) next(err);
 		next(null, result);

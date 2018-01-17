@@ -140,13 +140,34 @@ module.exports.verifyWithAccAuth = (req, res, next) => {
                             next(new UnauthorizedAccessError("Basic authorization is failed"));
                         } 
                         else {
-                            req.user=result.authentication.role;
-                            console.log("current user role is"+req.user)
+                            console.log("role "+result.authentication.role)
+                            console.log("type "+result.sellerType)
+                            if("USER"===result.authentication.role && "SELLER" !== result.sellerType){
+                                req.user={"role":result.authentication.role,
+                                        "type":"CUSTOMER",
+                                        "id":result.customerId
+                                        };
+                                        console.log("customer accessing it")
+                            }else if("USER"===result.authentication.role && "SALLER" === result.sellerType){
+                                req.user={"role":result.authentication.role,
+                                        "type":result.sellerType,
+                                        "id":result.sellerId
+                                        };
+                                        console.log("seller accessing it")
+                            }else if("SUPER_ADMIN"===result.authentication.role && "ADMIN" === result.sellerType){
+                                req.user={"role":result.authentication.role,
+                                            "type":result.sellerType,
+                                            "id":result.sellerId
+                                            };
+                                            console.log("super admin accessing it")
+                            }
+                            }
+                            console.log("current user role is"+JSON.stringify(req.user));
                             next(null, true);
                         }
                       //  next(null, result);
 
-                    }   
+                   // }   
                 });
             }
 
