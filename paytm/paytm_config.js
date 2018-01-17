@@ -1,9 +1,9 @@
 module.exports = {
   paytm_config: {
-		MID: 'Pikazz52764882100424',
-		WEBSITE: 'www.aggarwaldailyneedsservice.com',
+	MID: 'AGGARW60155040679165',
+	WEBSITE: 'www.aggarwaldailyneedsservices.com',
     CHANNEL_ID: 'WAP',
     INDUSTRY_TYPE_ID: 'Retail',
-    MERCHANT_KEY : 'RYlPu#4Oj0JnEyV8'
+    MERCHANT_KEY : 's8rFS8UjSvx!DZWr'
 	}
 }
