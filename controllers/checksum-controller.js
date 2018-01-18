@@ -15,7 +15,7 @@ exports.generate = (req, res, next) => {
 				paramarray['MID'] = req.body.mid; //Provided by Paytm
 				paramarray['ORDER_ID'] = req.body.orderId; //unique OrderId for every request
 				paramarray['CUST_ID'] = req.body.customerId;  // unique customer identifier 
-				paramarray['INDUSTRY_TYPE_ID'] = req.body.chennalType; //Provided by Paytm
+				paramarray['INDUSTRY_TYPE_ID'] = req.body.industryType; //Provided by Paytm
 				paramarray['CHANNEL_ID'] = req.body.chennalType; //Provided by Paytm
 				paramarray['TXN_AMOUNT'] = req.body.amount; // transaction amount
 				paramarray['WEBSITE'] = req.body.website; //Provided by Paytm
