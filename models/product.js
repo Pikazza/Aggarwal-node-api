@@ -4,7 +4,7 @@ const ValidationError = require('../exceptions/validation-error');
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
-const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER'];
+const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER','METER','CENTI_METER','MILLI_METER','UNIT','OTHERS'];
 const statusType = ['SHOW','HIDE'];
 
 let productSchema = new Schema({

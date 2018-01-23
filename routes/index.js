@@ -277,6 +277,11 @@ module.exports = function(router){
 *           - GRAM
 *           - LITTER
 *           - MILLILITTER
+*           - METER
+*           - CENTIMETER
+*           - MILLIMETER
+*           - UNIT
+*           - OTHERS
 *   OrderUpdateRequest:
 *     properties:
 *       orderId:
@@ -464,6 +469,11 @@ module.exports = function(router){
 *           - GRAM
 *           - LITTER
 *           - MILLILITTER
+*           - METER
+*           - CENTIMETER
+*           - MILLIMETER
+*           - UNIT
+*           - OTHERS
 *       status:
 *         type: string
 *         default: SHOW
@@ -515,6 +525,11 @@ module.exports = function(router){
 *           - GRAM
 *           - LITTER
 *           - MILLILITTER
+*           - METER
+*           - CENTIMETER
+*           - MILLIMETER
+*           - UNIT
+*           - OTHERS
 *       status:
 *         type: string
 *         default: SHOW

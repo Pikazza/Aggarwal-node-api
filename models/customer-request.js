@@ -37,8 +37,6 @@ let customerSchema = new Schema({
       type: String,
       trim: true,
       lowercase: true,
-      unique: true,
-      required: true,
       validate: [validateEmail, 'Please fill a valid email address']
     },
     authentication: {

@@ -9,7 +9,7 @@ const orderType = ['INITIALIZED','ACCEPTED', 'READY_TO_COLLECT','COMPLETED','CAN
 const paymentType= ['INITIALIZED','SUCCESSFUL','PENDING','CANCELED'];
 const serviceTypeEnum= ['TAKE_AWAY','PAYTM','CASH_ON_DELIVERY'];
 const orderTypeEnum= ['CART','CAMERA'];
-const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER'];
+const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER','METER','CENTIMETER','MILLIMETER','UNIT','OTHERS'];
 
 let imagesScheme = new Schema({
   image:String,
