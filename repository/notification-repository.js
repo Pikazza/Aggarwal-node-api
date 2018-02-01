@@ -18,12 +18,14 @@ module.exports.findAll=  ( next) => {
 	}); 
 };
 
-module.exports.create = (productReq, next) => {
+module.exports.create1 = (productReq, next) => {
 	console.log("notification in impl..4");
-	notification.create(productReq,{new : true}, function(err, result) {
+	notification.create(productReq,function(err, result) {
 		console.log("notification in impl..5");
-		if (err)  next(err);
-		next(null, result);
+		if (err) {next(err);}
+		else{
+		 next(null, result);			
+		}
 	});
 };
 

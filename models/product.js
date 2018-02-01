@@ -4,8 +4,17 @@ const ValidationError = require('../exceptions/validation-error');
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
-const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER','METER','CENTI_METER','MILLI_METER','UNIT','OTHERS'];
+//const unitType = ['KILOGRAM','GRAM','LITER','MILLILITER','METER','CENTIMETER','MILLIMETER','UNIT','OTHERS'];
 const statusType = ['SHOW','HIDE'];
+
+let stocksSchema = new Schema({
+  price:Number,
+  offerPrice:Number,
+  quantityInStock:Number,
+  unit:Number,
+  unitType:{type: String}
+});
+
 
 let productSchema = new Schema({
       itemId:{
@@ -15,26 +24,20 @@ let productSchema = new Schema({
       itemName:String,
       itemDesc:String,
       itemImage:String,
-      price:Number,
-      offerPrice:Number,
-      gst:Number,
-      priceWithGST:Number,
       status:{type: String, enum: statusType},
       category1:String,
       category2:String,
       category3:String,
       category4:String,
-      quantityInStock:Number,
       validTill:Date,
-      unit:Number,
+      stocks:[stocksSchema],
       createdOn: {
           type: Date
           },
       modifiedOn: {
         type: Date, 
         default: Date.now
-        },
-      unitType:{type: String, enum: unitType},
+        }
     },{ collection: 'product' });
 
 let product = mongoose.model("product", productSchema);

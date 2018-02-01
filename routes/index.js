@@ -245,13 +245,13 @@ module.exports = function(router){
 *         type: string
 *       itemName: 
 *         type: string
+*       itemImage: 
+*         type: string
+*       stockId: 
+*         type: string
 *       price:
 *         type: number
 *       offerPrice:
-*         type: number
-*       gst:
-*         type: number
-*       priceWithGST:
 *         type: number
 *       count: 
 *         type: number
@@ -346,6 +346,8 @@ module.exports = function(router){
 *       orderedOn:
 *         type: string
 *         format: date-time
+*       region: 
+*         type: string
 *       orderingCharge:
 *           $ref: '#/definitions/OrderingCharge'
 *       listOfItems:
@@ -394,6 +396,8 @@ module.exports = function(router){
 *       orderedOn:
 *         type: string
 *         format: date-time
+*       region: 
+*         type: string
 *       orderingCharge:
 *           $ref: '#/definitions/OrderingCharge'
 *       listOfItems:
@@ -426,39 +430,16 @@ module.exports = function(router){
 *         type: string
 *       message: 
 *         type: string
-*   ProductRequest:
+*   Stock:
 *     properties:
-*       itemName: 
-*         type: string
-*       itemDesc: 
-*         type: string
-*       itemImage: 
-*         type: string
 *       price: 
 *         type: number
 *         format: double
 *       offerPrice: 
 *         type: number
 *         format: double
-*       gst: 
-*         type: number
-*         format: double
-*       priceWithGST: 
-*         type: number
-*         format: double
-*       category1: 
-*         type: string
-*       category2: 
-*         type: string
-*       category3: 
-*         type: string
-*       category4:
-*         type: string
 *       quantityInStock: 
 *         type: number
-*       validTill: 
-*         type: string
-*         format: date-time
 *       unit:
 *         type: number
 *       unitType:
@@ -474,6 +455,30 @@ module.exports = function(router){
 *           - MILLIMETER
 *           - UNIT
 *           - OTHERS
+
+*   ProductRequest:
+*     properties:
+*       itemName: 
+*         type: string
+*       itemDesc: 
+*         type: string
+*       itemImage: 
+*         type: string
+*       category1: 
+*         type: string
+*       category2: 
+*         type: string
+*       category3: 
+*         type: string
+*       category4:
+*         type: string
+*       validTill: 
+*         type: string
+*         format: date-time
+*       stocks:
+*         type: array
+*         items:
+*           $ref: '#/definitions/Stock'
 *       status:
 *         type: string
 *         default: SHOW
@@ -490,18 +495,6 @@ module.exports = function(router){
 *         type: string
 *       itemImage: 
 *         type: string
-*       price: 
-*         type: number
-*         format: double
-*       offerPrice: 
-*         type: number
-*         format: double
-*       gst: 
-*         type: number
-*         format: double
-*       priceWithGST: 
-*         type: number
-*         format: double
 *       category1: 
 *         type: string
 *       category2: 
@@ -515,21 +508,10 @@ module.exports = function(router){
 *       validTill: 
 *         type: string
 *         format: date-time
-*       unit:
-*         type: number
-*       unitType:
-*         type: string
-*         default: KILOGRAM
-*         enum:
-*           - KILOGRAM
-*           - GRAM
-*           - LITTER
-*           - MILLILITTER
-*           - METER
-*           - CENTIMETER
-*           - MILLIMETER
-*           - UNIT
-*           - OTHERS
+*       stock:
+*         type: array
+*         items:
+*           $ref: '#/definitions/Stock'
 *       status:
 *         type: string
 *         default: SHOW
@@ -704,7 +686,7 @@ module.exports = function(router){
 *         type: string
 *       notDesc: 
 *         type: string
-*       sendAT: 
+*       sendAt: 
 *         type: string
 *         format: date-time
 *       channelType:
@@ -727,7 +709,7 @@ module.exports = function(router){
 *         type: string
 *       notDesc: 
 *         type: string
-*       sendAT: 
+*       sendAt: 
 *         type: string
 *         format: date-time
 *       channelType:

@@ -16,7 +16,7 @@ module.exports.findNotificationById = (notId, next) => {
 			next(err);			
 		}
 		if(!result){
-			next(new ProductNotFoundError("No Product items found for given id"+notId));
+			next(new ProductNotFoundError("No Notification items found for given id"+notId));
 		}
 		else{
   			next(null, result);
@@ -43,11 +43,12 @@ console.log("notification in impl..");
 				next(err);
 			}
 			else{
-				console.log("notification in impl..2");
-				var notify = new notification(notReq);
+				console.log("notification in impl..2"+ JSON.stringify(notReq));
+				let notify = new notification(notReq);
 				notify.notId=sequenceId;
 				notify.createdOn= new Date();
-				notificationRepository.create(notify, function(err, result) {
+				console.log("notification in impl..2 notify"+ JSON.stringify(notify));
+				notificationRepository.create1(notify, function(err, result) {
 					console.log("notification in impl..3");
 					if (err){
 						next(err);

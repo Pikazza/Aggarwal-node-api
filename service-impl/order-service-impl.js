@@ -65,57 +65,36 @@ module.exports.create = (orderReq ,next) => {
 
 	  		orderReq.orderId=sequenceId;
 	  		let sellerId= 0;
-	  		let address;
-	  		let region;
-				customerRepository.findByCustomerId(orderReq.customerId, function(err, result) {
+				referenceDataRepository.findAll(function(err, result1) {
 					if (err){
-						sellerId= 0;		
+						sellerId= 0;
 					}
 					else{
-
-						if(result.addresses.length > 0 ){ 
-							address = _.some(result.addresses, [ 'addressType', "DELEVERY" ]);
-						}
-						if(address){
-							_.each(result.addresses, function(resAddress){
-								if(resAddress.addressType ==  "DELEVERY"){
-									region= resAddress.addressLine2;
-								}
+						if(result1.regionList){
+							let ss =_.filter(result1.regionList, function(resRegion) {
+									return resRegion.name ==  orderReq.region;
 							});
-						}
-						else{
-						region="";
-						}
-						referenceDataRepository.findAll(function(err, result1) {
-							if (err){
-								sellerId= 0;
+							if(ss[0]){
+								orderReq.sellerId = ss[0].sellerId;
 							}
 							else{
-								if(result1.regionList){
-									_.forEach(result1.regionList, function(resRegion){
-										if(resRegion.name ==  region){
-										orderReq.sellerId = resRegion.sellerId;
-										}
-										else{
-											orderReq.sellerId="1";
-										}
-									});
-								}
-								else{
 								orderReq.sellerId="1";
-								}
-									orderRepository.create(orderReq ,function(err, result){
-										if(err){
-											next(err);
-										}
-										else{
-											next(null, result)
-										}
-									});
-
-							}	
+							}
+						}
+						else
+						{
+							orderReq.sellerId="1";
+						}
+						orderRepository.create(orderReq ,function(err, result){
+							if(err){
+								next(err);
+							}
+							else{
+								next(null, result)
+							}
 						});
-					}	
+
+					}
 				});	
 		}
 	});
@@ -138,6 +117,9 @@ module.exports.update = (orderId, orderReq ,next) => {
 			result.orderStatus=orderReq.orderStatus;
 			result.totalAmountToBePaid=orderReq.totalAmountToBePaid;
 			result.paymentStatus=orderReq.paymentStatus;
+			if(orderReq.sellerId){
+				result.sellerId=orderReq.sellerId;
+			}
 			orderRepository.update(result, function(err, updatedOrder){
 				next(null, updatedOrder);
 			});

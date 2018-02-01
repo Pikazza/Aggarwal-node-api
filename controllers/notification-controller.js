@@ -30,7 +30,7 @@ exports.get = (req, res, next) => {
 };
 
 exports.add = (req, res, next) => {
-	logger.info("Rigistering new product..");
+	logger.info("adding new Notification record.."+JSON.stringify(req.body));
     notificationServiceImpl.create(req.body, function (err , result){
 		if (err) {
 			next(err);

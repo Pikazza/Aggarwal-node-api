@@ -9,7 +9,7 @@ const orderType = ['INITIALIZED','ACCEPTED', 'READY_TO_COLLECT','COMPLETED','CAN
 const paymentType= ['INITIALIZED','SUCCESSFUL','PENDING','CANCELED'];
 const serviceTypeEnum= ['TAKE_AWAY','PAYTM','CASH_ON_DELIVERY'];
 const orderTypeEnum= ['CART','CAMERA'];
-const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER','METER','CENTIMETER','MILLIMETER','UNIT','OTHERS'];
+//const unitType = ['KILOGRAM','GRAM','LITTER','MILLILITTER','METER','CENTIMETER','MILLIMETER','UNIT','OTHERS'];
 
 let imagesScheme = new Schema({
   image:String,
@@ -23,8 +23,6 @@ let orderSchema = new Schema({
 	    },
 	    customerId:{ type: Number },
 	    sellerId:{ type: Number },
-	    //stripeToken:String,
-	    //stripeFranchiseeId:String,
 	    orderStatus:{type: String, enum: orderType},
 	    paymentStatus: {type: String, enum: paymentType},
 	    extraPreference:String,
@@ -32,6 +30,7 @@ let orderSchema = new Schema({
 	    totalAmountToBePaid:Number,
 	    serviceType:{type: String, enum: serviceTypeEnum},
 	    orderType:{type: String, enum: orderTypeEnum},
+	    region:String,
 	    orderingCharge:{
 	    	totalProductAmount:Number,
 	    	deleveryCharge:Number,
@@ -40,20 +39,19 @@ let orderSchema = new Schema({
 	    },
 	    listOfItems:[{
 	    	itemId:String,
-		      itemName:String,
-		      itemImage:String,
-		      price:Number,
-		      offerPrice:Number,
-		      gst:Number,
-		      priceWithGST:Number,
-		      category1:String,
-		      category2:String,
-		      category3:String,
-		      category4:String,
-		      images:[imagesScheme],
-		      count:Number,
-		      unit:Number,
-		      unitType:{type: String, enum: unitType}
+	    	stockId:String,
+		    itemName:String,
+		    itemImage:String,
+		    price:Number,
+		    offerPrice:Number,
+		    category1:String,
+		    category2:String,
+		    category3:String,
+		    category4:String,
+		    images:[imagesScheme],
+		    count:Number,
+		    unit:Number,
+		    unitType:{type: String}
 	    }]
 		},{ collection: 'order' , toJSON: { virtuals: true } });
 
