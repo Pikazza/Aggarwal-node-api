@@ -18,6 +18,13 @@ module.exports.findAll=  ( next) => {
 	}); 
 };
 
+/*module.exports.findValidNotification=  ( next) => {
+	notification.find({'$and': [ { "sendAt": {'$lt': new Date() } }, { "status"="ACTIVE" } ] }, function(err, result) {
+		if (err) next(err);
+		next(null, result);
+	}); 
+};*/
+
 module.exports.create1 = (productReq, next) => {
 	console.log("notification in impl..4");
 	notification.create(productReq,function(err, result) {

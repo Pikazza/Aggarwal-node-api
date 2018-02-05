@@ -4,10 +4,8 @@ const _ = require('lodash');
 
 const notification = require('../models/notification').Notification;
 const notificationRepository = require('../repository/notification-repository'); 
-
 const SequenceImpl = require('../service-impl/sequence');
 const apiUtils = require('../util/api-utils');
- 
 const ProductNotFoundError = require('../exceptions/menu-not-found-error');
 
 module.exports.findNotificationById = (notId, next) => {

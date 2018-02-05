@@ -9,7 +9,7 @@ import routes from './routes/index';
 import logger from './config/logger';
 import Props from'./util/api-properties';
 import fs from 'fs';
-
+//import notify from'./util/notification-sender';
 
 const app = express();
 
@@ -19,7 +19,7 @@ app.use(morgan(':remote-addr - :remote-user ":method :url HTTP/:http-version" :s
 { stream: { write: message => logger.info(message.trim()) }}));
 app.use(router);
 
-router.use(bodyParser.json({limit: '10mb'}));
+router.use(bodyParser.json({limit: '15mb'}));
 router.use(bodyParser.urlencoded({
 	extended: true
 }));
