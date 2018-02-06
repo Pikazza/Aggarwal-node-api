@@ -65,7 +65,7 @@ module.exports.findAll=  ( next) => {
 };
 
 module.exports.create = (productReq, next) => {
-	product.create(productReq,{new : true}, function(err, result) {
+	product.create(productReq, function(err, result) {
 		if (err)  next(err);
 		next(null, result);
 	});
@@ -89,3 +89,44 @@ module.exports.update = function (productReq, next) {
 		});
 };
 
+module.exports.updateCategory4 = function (oldValue,newValue, next) {
+		product.update({"category4":oldValue},{"category4":newValue},{multi: true},function(err, result) {
+			if (err) {
+				next(err);
+			}  
+			else{
+				next(null, result);
+			}
+		});
+};
+
+module.exports.updateCategory3 = function (oldValue,newValue, next) {
+		product.update({"category3":oldValue},{"category3":newValue},{multi: true},function(err, result) {
+			if (err) {
+				next(err);
+			}  
+			else{
+				next(null, result);
+			}
+		});
+};
+module.exports.updateCategory2 = function (oldValue,newValue, next) {
+		product.update({"category2":oldValue},{"category2":newValue},{multi: true},function(err, result) {
+			if (err) {
+				next(err);
+			}  
+			else{
+				next(null, result);
+			}
+		});
+};
+module.exports.updateCategory1 = function (oldValue,newValue, next) {
+		product.update({"category1":oldValue},{"category1":newValue},{multi: true},function(err, result) {
+			if (err) {
+				next(err);
+			}  
+			else{
+				next(null, result);
+			}
+		});
+};

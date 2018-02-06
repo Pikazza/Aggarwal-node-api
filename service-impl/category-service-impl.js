@@ -8,6 +8,7 @@ const MenuNotFoundError = require('../exceptions/menu-not-found-error');
 const ScheduleNotFoundError = require('../exceptions/schedule-not-found-error');
 const SequenceImpl = require('../service-impl/sequence');
 const apiUtils = require('../util/api-utils');
+const productRepository = require('../repository/product-repository'); 
 
 module.exports.findById = (categoryId, next) => {
 	categoryRepository.findProductById(categoryId, function(err, result) {
@@ -82,6 +83,15 @@ console.log("coming to cateory impl to update or insert new one");
 									obj.image=apiUtils.uploadImage("cat_cat1"+(_.random(100000, 99)),loopCat.image);
 								}
 							     obj.status=loopCat.status;
+							     productRepository.updateCategory1(obj.name,loopCat.name, function(err, result) {
+									if(err) {
+										console.log(" category 1 is not updated");
+									}
+									else
+									{
+										console.log(" category 1 is updated");
+									}
+								});
 							      obj.name=loopCat.name;
 							      if(loopCat.subCategoryList1){
 							      // One Categoty starts here
@@ -93,6 +103,15 @@ console.log("coming to cateory impl to update or insert new one");
 														objOne.image=apiUtils.uploadImage("cat_cat2"+(_.random(100000, 99)),loopCatOne.image);
 													}
 												     objOne.status=loopCatOne.status;
+												     productRepository.updateCategory2(objOne.name,loopCatOne.name, function(err, result) {
+															if(err) {
+																console.log(" category 2 is not updated");
+															}
+															else
+															{
+																console.log(" category 2 is updated");
+															}
+														});
 												      objOne.name=loopCatOne.name;
 												      if(loopCatOne.subCategoryList2){
 												     // Two Categoty starts here
@@ -104,6 +123,15 @@ console.log("coming to cateory impl to update or insert new one");
 																			objTwo.image=apiUtils.uploadImage("cat_cat3"+(_.random(100000, 99)),loopCatTwo.image);
 																		}
 																	     objTwo.status=loopCatTwo.status;
+																	     productRepository.updateCategory3(objTwo.name,loopCatTwo.name, function(err, result) {
+																								if(err) {
+																									console.log(" category 3 is not updated");
+																								}
+																								else
+																								{
+																									console.log(" category 3 is updated");
+																								}
+																							});
 																	      objTwo.name=loopCatTwo.name;
 																	      if(loopCatTwo.subCategoryList3){
 																	      // Three Categoty starts here
@@ -115,6 +143,16 @@ console.log("coming to cateory impl to update or insert new one");
 																								objThree.image=apiUtils.uploadImage("cat_cat4"+(_.random(100000, 99)),loopCatThree.image);
 																							}
 																						     objThree.status=loopCatThree.status;
+																						    // productRepository.updateCategory4()
+																						     productRepository.updateCategory4(objThree.name,loopCatThree.name, function(err, result) {
+																								if(err) {
+																									console.log(" category 4 is not updated");
+																								}
+																								else
+																								{
+																									console.log(" category 4 is updated");
+																								}
+																							});
 																						      objThree.name=loopCatThree.name;
 																						  }
 																					});			
