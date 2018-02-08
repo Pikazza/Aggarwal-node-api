@@ -87,7 +87,7 @@ module.exports.create = (orderReq ,next) => {
 							orderReq.sellerId="1";
 						}
 
-						sellerServiceImpl.getById(req.query.sellerId, function (err , seller){
+						sellerServiceImpl.getById(orderReq.sellerId, function (err , seller){
 							if (err) {
 								next(err);
 							} 
