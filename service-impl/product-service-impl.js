@@ -35,9 +35,9 @@ module.exports.search = (productId, next) => {
 	});		
 };
 
-module.exports.findProductByCategory = (catOne,catTwo, next) => {
+module.exports.findProductByCategory = (catOne,catTwo, catThree, next) => {
 		console.log("From impl class "+catOne + catTwo);
-	productRepository.findProductByCategory( catOne,catTwo ,function(err, result) {
+	productRepository.findProductByCategory( catOne,catTwo,catThree,function(err, result) {
 		if (err){
 			next(err);			
 		}

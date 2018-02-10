@@ -32,6 +32,11 @@ module.exports = function(router){
 *         in: query
 *         required: false
 *         type: string
+*       - name: categoryThree
+*         description: third category name to filter the products
+*         in: query
+*         required: false
+*         type: string
 *       - name: searchKey
 *         description: search to filter the products
 *         in: query

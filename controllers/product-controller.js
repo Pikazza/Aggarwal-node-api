@@ -18,10 +18,10 @@ exports.get = (req, res, next) => {
 			}
 		});
 	}
-	else if(req.query.categoryOne || req.query.categoryTwo){
+	else if(req.query.categoryOne || req.query.categoryTwo || req.query.categoryThree ){
 		logger.info("Getting store products...based on categories");
 		console.log(req.query.categoryOne + req.query.categoryTwo);
-		productServiceImpl.findProductByCategory(req.query.categoryOne, req.query.categoryTwo, function (err , result){
+		productServiceImpl.findProductByCategory(req.query.categoryOne, req.query.categoryTwo, req.query.categoryThree, function (err , result){
 			if (err) {
 				next(err);
 			} 

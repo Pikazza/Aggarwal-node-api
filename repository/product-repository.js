@@ -38,17 +38,19 @@ module.exports.search =  (ptyId, next) => {
 
 };
 
-module.exports.findProductByCategory=  (catOne,catTwo, next) => {
+module.exports.findProductByCategory=  (catOne,catTwo, catThree, next) => {
 	console.log(catOne + catTwo);
 	let query={ };
-	if (catOne && catTwo){
-		query={"category1":catOne,"category2":catTwo};
+	if (catOne && catTwo && catThree){
+		query={"category1":catOne,"category2":catTwo,"category3":catThree};
 	}
 	else if(catOne){
 		query={"category1":catOne};
 	}
 	else if(catTwo){
 		query={"category2":catTwo};
+	}else if(catThree){
+		query={"category3":catThree};
 	}
 console.log("the  cat based query"+ JSON.stringify(query));
 	product.find(query , function(err, result) {
