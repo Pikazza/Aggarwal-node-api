@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 var nodemailer = require('nodemailer');
 var ejs = require('ejs');
 var fs = require('fs');
@@ -52,4 +52,4 @@ var mailSender = function (email,Pass,tempPass,mailType) {
 
 module.exports = {
 	MailSender: mailSender
-}
+}*/

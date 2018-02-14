@@ -14,12 +14,14 @@ function paramsToString(params, mandatoryflag) {
   var tempKeys = Object.keys(params);
   if (!flag) tempKeys.sort();
   tempKeys.forEach(function (key) {
+    console.log("Prabakaran key "+ key)
+    console.log("Prabakaran params[key] "+ params[key])
     value = params[key];
 
-    if (value.indexOf("REFUND") > -1 || value.indexOf("|") > -1) {
+    /*if (value.indexOf("REFUND") > -1 || value.indexOf("|") > -1) {
      // continue;
      return true;
-    }
+    }*/
     
     if (key !== 'CHECKSUMHASH' ) {
       if (params[key] === 'null') params[key] = '';
@@ -35,6 +37,7 @@ function paramsToString(params, mandatoryflag) {
 function genchecksum(params, key, cb) {
 	var flag = params.refund ? true : false;
   var data = paramsToString(params);
+  console.log("Pikazza data "+data);
 	crypt.gen_salt(4, function (err, salt) {
     var sha256 = crypto.createHash('sha256').update(data + salt).digest('hex');
     var check_sum = sha256 + salt;

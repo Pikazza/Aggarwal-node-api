@@ -1,10 +1,11 @@
 module.exports = {
-	mail:{
-		host:'smtp.gmail.com',
-		port:'465',	
-		senderName:'agarwal',
-		senderMailId:'pikazzatestsp@gmail.com',
-		passWord:'Pikazza1'
+	paytm_config: {
+		HOST_TXNSTATUS:'https://pguat.paytm.com/oltp/HANDLER_INTERNAL/getTxnStatus',
+		MID: 'AGGARW60155040679165',
+		WEBSITE: 'APP_STAGING',
+	    CHANNEL_ID: 'WAP',
+	    INDUSTRY_TYPE_ID: 'Retail',
+	    MERCHANT_KEY : 's8rFS8UjSvx!DZWr'
 	},
 	db:{
 		url:'mongodb://localhost:21215/agarwal-db',
