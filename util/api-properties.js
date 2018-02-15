@@ -31,7 +31,7 @@ module.exports = {
 	imageRefPath:{
 		uploadPath:'/app/aggarwal-images/images/',
 		hostingPath:'/app/aggarwal-images/',
-		host:'http://35.200.176.109:8080/images/'
+		host:'http://35.200.191.243:8080/images/'
 	},
 	/*imageRefPath:{
 		uploadPath:'/opt/starvzi-images/images/',
@@ -42,6 +42,6 @@ module.exports = {
 		//uploadPath:'/opt/starvzi-images/images/',
 	},*/
 	swagger:{
-		hostpath:'35.200.176.109:8080'
+		hostpath:'35.200.191.243:8080'
 	}
 };
