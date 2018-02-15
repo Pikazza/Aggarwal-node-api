@@ -8,28 +8,30 @@ module.exports = {
 	    MERCHANT_KEY : 's8rFS8UjSvx!DZWr'
 	},
 	db:{
-		url:'mongodb://35.200.176.109:21215/agarwal-db',
+		url:'mongodb://localhost:21215/agarwal-db',
 		name:'agarwal-db',
 	},
 	twilio:{
 		accountSid:"AC08917a0306887de223b707ba862c0242",
 		authToken:"3d3a1f916a39577a90b150ca1c7556be",
-		sender:"+15558675309",
+		sender:"+14438430521",
 		body: "The verification code of Aggarwal Daily needs is "
 
 	},
-
 	basicAuth:{
 		userName:'Cumulonimbus',
 		passWord:'H40@C#i!CuMl0P!K4ZzA9nIWBuzH40@C#i!'
 	},
+	jwtSecret:{
+		key:'secretpasswordforstarvzinodejsproject'
+	},
 	logger:{
-		path:'/home/admin/haochii-log/',
+		path:'/app/logs/'
 	},
 	imageRefPath:{
-		uploadPath:'/home/admin/haochii-images/images/',
-		hostingPath:'/home/admin/haochii-images/',
-		host:'http://localhost:8080/images/'
+		uploadPath:'/app/aggarwal-images/images/',
+		hostingPath:'/app/aggarwal-images/',
+		host:'http://35.200.176.109:8080/images/'
 	},
 	/*imageRefPath:{
 		uploadPath:'/opt/starvzi-images/images/',
@@ -40,6 +42,6 @@ module.exports = {
 		//uploadPath:'/opt/starvzi-images/images/',
 	},*/
 	swagger:{
-		hostpath:'localhost:8080'
+		hostpath:'35.200.176.109:8080'
 	}
 };

@@ -23,7 +23,7 @@ exports.get = (req, res, next) => {
 									  if (error) throw new Error(error);
 
 									  console.log(body);
-									  res.status(200).json(body);
+									  res.status(200).json(JSON.parse(body));
 									});
 				});
 }else{
