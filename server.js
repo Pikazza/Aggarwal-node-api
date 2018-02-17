@@ -9,7 +9,7 @@ import routes from './routes/index';
 import logger from './config/logger';
 import Props from'./util/api-properties';
 import fs from 'fs';
-//import notify from'./util/notification-sender';
+import notify from'./util/notification-sender';
 
 const app = express();
 

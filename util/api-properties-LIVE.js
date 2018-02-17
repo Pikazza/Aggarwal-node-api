@@ -1,13 +1,18 @@
 module.exports = {
-	mail:{
-		host:'smtp.gmail.com',
-		port:'465',	
-		senderName:'agarwal',
-		senderMailId:'pikazzatestsp@gmail.com',
-		passWord:'Pikazza1'
+	paytm_config: {
+		HOST_TXNSTATUS:'https://secure.paytm.in/oltp/HANDLER_INTERNAL/getTxnStatus',
+		MID: 'AGGARW67316435649409',
+		WEBSITE: 'AGGARWALDWAP',
+	    CHANNEL_ID: 'WAP',
+	    INDUSTRY_TYPE_ID: 'Retail109',
+	    MERCHANT_KEY : 'SJOjjmsXMHec121X'
+	},
+	notification:{
+		sellersKey:'AAAA3eYd9oo:APA91bGeXljzhB9Gl_newKddivGcTfDj6IxYCIlq1bTSaW4A6YbVmq4gt5lNwLK88bbyVkmHeE0O4NeiuuQMjvjTRGhsiKWvM9Jz0ae2fz4qWKY9--x61sMAQD6xx3UK-V_RYZhD9Xc-',
+		customersKey:'AAAAtXKqCeg:APA91bH8e2cfENcvQGz5KqvCFT0JTj7fDTQmEWiDHd4YhXNDxcgnuOx_RwwcXnu_VxNTsUgDLfDe4vb-9LMXmcOqv_C7jmM3ChAhPPQwUo-qiHzDxL0H5yjpXkraAZtt17rHcHH6Y2Tp',
 	},
 	db:{
-		url:'mongodb://localhost:21215/agarwal-db',
+		url:'mongodb://pikazza:AggarWal123@localhost:21215/agarwal-db',
 		name:'agarwal-db',
 	},
 	twilio:{
@@ -30,7 +35,7 @@ module.exports = {
 	imageRefPath:{
 		uploadPath:'/app/aggarwal-images/images/',
 		hostingPath:'/app/aggarwal-images/',
-		host:'http://35.200.176.109:8080/images/'
+		host:'http://35.200.158.71:8080/images/'
 	},
 	/*imageRefPath:{
 		uploadPath:'/opt/starvzi-images/images/',
@@ -41,6 +46,6 @@ module.exports = {
 		//uploadPath:'/opt/starvzi-images/images/',
 	},*/
 	swagger:{
-		hostpath:'35.200.176.109:8080'
+		hostpath:'35.200.158.71:8080'
 	}
 };

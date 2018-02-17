@@ -1,3 +1,4 @@
+'use strict';
 
 const orderRepository = require('../repository/order-repository'); 
 const SequenceImpl = require('../service-impl/sequence');
@@ -10,6 +11,8 @@ const _ = require('lodash');
 const referenceDataRepository = require('../repository/reference-data-repository');
 const customerRepository = require('../repository/customer-repository');
 const pushNotify = require('../config/push-notifications');
+const apiProperties = require('../util/api-properties');
+
 module.exports.getAll = (userType, userId, next) => {
 		  orderRepository.findAll(userType, userId, function(err, result) {
 		  if (err) next(err);
@@ -93,7 +96,7 @@ module.exports.create = (orderReq ,next) => {
 							} 
 							else{
 									if(seller.device && seller.device.deviceToken){
-										pushNotify.pushit('A new order received with OrderId '+orderReq.orderId,[seller.device.deviceToken]);
+										pushNotify.pushit(apiProperties.notification.sellersKey,'A new order received with OrderId '+orderReq.orderId,[seller.device.deviceToken]);
 									}
 								}
 						});

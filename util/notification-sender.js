@@ -1,11 +1,13 @@
+'use strict';
+
 let cron = require('node-cron');
 const _ = require('lodash');
 const customerRepository = require('../repository/customer-repository'); 
 const pushNotify = require('../config/push-notifications');
 const notificationRepository = require('../repository/notification-repository'); 
+const apiProperties = require('./api-properties');
 
-
-let task =cron.schedule('* */15 * * * *', function(){
+let task =cron.schedule('* */10 * * * *', function(){
   console.log('running a task every two minutes');
 let tokenArray=[];
 
@@ -33,7 +35,7 @@ notificationRepository.findValidNotification(function(err, result) {
 
 						}
 						console.log("Pikazza notification array "+tokenArray)
-						pushNotify.pushit(result.notDesc,[tokenArray]);
+						pushNotify.pushit(apiProperties.notification.customersKey,result.notDesc,[tokenArray]);
 						notify.status='DEACTIVE';
 						notificationRepository.update(notify, function(err, result2) {
 							if (err) {
@@ -51,10 +53,6 @@ notificationRepository.findValidNotification(function(err, result) {
 		  }
 
 	});
-
-
-
-
 
 });
 
