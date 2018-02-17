@@ -7,7 +7,7 @@ const pushNotify = require('../config/push-notifications');
 const notificationRepository = require('../repository/notification-repository'); 
 const apiProperties = require('./api-properties');
 
-let task =cron.schedule('* */10 * * * *', function(){
+let task =cron.schedule('*/10 * * * *', function(){
   console.log('running a task every two minutes');
 let tokenArray=[];
 
