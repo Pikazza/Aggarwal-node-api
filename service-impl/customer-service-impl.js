@@ -210,21 +210,24 @@ module.exports.verifyOtp = (authId, otp, next) => {
 		if(!result) {
 			next(new PartyNotFoundError("There is no Records found for Customer id "+authId));
 		} 
-		else if(result.authentication.tempToken != otp ){
+		/*else if(result.authentication.tempToken != otp ){
 			next(new OTPValidationError("given OTP is not matched"));
 		}else if (result.authentication.tempTokenExpiredOn <= new Date() ){
 			next(new OTPValidationError("given OTP is Expired on "+result.authentication.tempTokenExpiredOn));
-		}
+		}*/
 		else{
-			//let token= jwtAuth.getJwt(result.customerId,result.authentication.authId,result.franchiseeName,result.firstName,
-			//			   result.lastName,"CUSTOMER",result.authentication.role);
-
-				result.verified=true;
-				customerRepository.update(result, function(err, updateResult) {
-					//next(null, {"customer":result,"jwtToken":token});
-					next(null, updateResult);
-				});	
-			next(null, {"status":"true","customerId":result.customerId});
+			twilio.SMSVerifier(result.authentication.authId,otp,function(err, res) {
+				if(err){
+						next(next(new OTPValidationError(err.errors.message)));
+					}
+					else{
+						console.log("Pikazza res"+ JSON.stringify(res));
+						result.verified=true;
+						customerRepository.update(result, function(err, updateResult) {
+							next(null, {"status":"true","customerId":result.customerId});
+						});	
+					}
+				});
 		}
 	});
 
