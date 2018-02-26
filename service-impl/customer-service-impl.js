@@ -187,7 +187,8 @@ module.exports.forgotPassword = (authId, next) => {
 		}  else {
 			//let random = (Math.random()*1e16).toString(36);
 			let random =_.random(1111, 9999);
-			result.verified=false;
+			let mobileNo = oneCustomer.authentication.authId;
+			oneCustomer.verified=false;
 			oneCustomer.authentication.tempToken=random;
 			oneCustomer.authentication.tempTokenExpiredOn=new Date().addHours(48);
 			oneCustomer.verified=false;
