@@ -61,7 +61,7 @@ module.exports.create = (partyReq, next) => {
 		  		sell.createdOn= new Date();
 		  		let mobileNo = partyReq.authentication.authId;
 		  		let plainPass = partyReq.authentication.authToken;
-		  		sell.authentication.authToken=apiUtils.encyptAuthToken(plainPass);
+		  		sell.authentication.authToken=plainPass;
 				if(partyReq.profileImage){
 				var	random=Math.floor(Math.random() * 200000);
 				var path = apiUtils.uploadImage(partyReq.sellerName+"_fr_cover"+random,partyReq.profileImage);
@@ -180,7 +180,7 @@ module.exports.loginV20 = (loginRequest, next) => {
 		if(err) next(err, null);
 		if(!result) {
 			next(new PartyNotFoundError("There is no Records found for Franchisee id "+loginRequest.authId));
-		} else if(! apiUtils.compareAuthToken(loginRequest.authToken,result.authentication.authToken)) {
+		} else if(! loginRequest.authToken == result.authentication.authToken ) {
 			next(new PasswordNotFound("Given Password is Not Matched for "+loginRequest.authId));
 		} else {
 				//let pty= new franchisee(result);

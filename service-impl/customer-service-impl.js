@@ -224,7 +224,12 @@ module.exports.verifyOtp = (authId, otp, next) => {
 						console.log("Pikazza res"+ JSON.stringify(res));
 						result.verified=true;
 						customerRepository.update(result, function(err, updateResult) {
-							next(null, {"status":"true","customerId":result.customerId});
+							next(null, {
+								"status":"true",
+								"customerId":result.customerId,
+								"firstName":result.firstName,
+								"lastName":result.lastName
+							});
 						});	
 					}
 				});
