@@ -136,7 +136,7 @@ module.exports.verifyWithAccAuth = (req, res, next) => {
                     else{
                         console.log("DB checking started "+result.authentication.authToken)
                         console.log("DB checking started "+apiUtils.encyptAuthToken(credentials.pass))
-                        if (apiUtils.encyptAuthToken(credentials.pass) != result.authentication.authToken) {
+                        if ( credentials.pass != result.authentication.authToken ) {
                             next(new UnauthorizedAccessError("Basic authorization is failed"));
                         } 
                         else {
