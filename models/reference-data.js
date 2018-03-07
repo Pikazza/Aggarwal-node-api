@@ -18,7 +18,8 @@ let sliderSchema = new Schema({
 
 let regionSchema = new Schema({
     name:String,
-    sellerId:String
+    sellerId:String,
+    status:String
 })
 
 let referenceDataSchema = new Schema({

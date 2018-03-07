@@ -118,19 +118,6 @@ module.exports = function(router){
 *         type: string
 *       postCode:
 *         type: string
-*   SellerRegion:
-*     properties:
-*       shopStatus:
-*         type: string
-*         default: OPEN
-*         enum:
-*           - OPEN
-*           - CLOSE
-*       tradingDate:
-*         type: string
-*         format: date-time
-*       location:
-*         $ref: '#/definitions/Location'
 *   SellerRequest:
 *     properties:
 *       status:
@@ -614,6 +601,12 @@ module.exports = function(router){
 *         type: string
 *       sellerId: 
 *         type: number
+*       status:
+*         type: string
+*         default: SHOW
+*         enum:
+*           - SHOW
+*           - HIDE
 *   HomeSlider:
 *     properties:
 *       name: 

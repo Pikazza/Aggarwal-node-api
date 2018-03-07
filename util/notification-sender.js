@@ -8,7 +8,7 @@ const notificationRepository = require('../repository/notification-repository');
 const apiProperties = require('./api-properties');
 
 let task =cron.schedule('*/10 * * * *', function(){
-  console.log('running a task every two minutes');
+  console.log('running a task every 10 minutes');
 let tokenArray=[];
 
 notificationRepository.findValidNotification(function(err, result) {
@@ -28,21 +28,21 @@ notificationRepository.findValidNotification(function(err, result) {
 							if (result1){
 								_.forEach(result1, function(customer){
 									if(customer.device && customer.device.deviceToken){
-										tokenArray.push(customer.device.deviceToken);		
+										tokenArray.push(customer.device.deviceToken);
+										console.log("tokens "+ customer.device.deviceToken)		
 									}									
 								});
 							}
 
 						}
-						console.log("Pikazza notification array "+tokenArray)
-						pushNotify.pushit(apiProperties.notification.customersKey,result.notDesc,[tokenArray]);
+						pushNotify.pushit(apiProperties.notification.customersKey, notify.notDesc, tokenArray);
 						notify.status='DEACTIVE';
 						notificationRepository.update(notify, function(err, result2) {
 							if (err) {
 							console.log("error while updating notification on cron ")
 							}  
 							else{
-								console.log("notification updation is done on cron")
+								console.log("notification updation is done on cron"+ JSON.stringify(result2))
 							}
 						});
 
