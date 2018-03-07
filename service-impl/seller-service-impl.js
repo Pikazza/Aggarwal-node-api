@@ -186,8 +186,8 @@ module.exports.loginV20 = (loginRequest, next) => {
 				//let pty= new franchisee(result);
 				result.device.deviceType=loginRequest.deviceType;
 				result.device.deviceToken=loginRequest.deviceToken;
-				let token= jwtAuth.getJwt(result.sellerId,result.authentication.authId,result.franchiseeName,result.firstName,
-						   result.lastName,result.franchiseType,result.authentication.role);
+				//let token= jwtAuth.getJwt(result.sellerId,result.authentication.authId,result.franchiseeName,result.firstName,
+						//   result.lastName,result.franchiseType,result.authentication.role);
 				sellerRepository.updateV20(result, function(err, updateResult) {
 					next(null, result);
 					});	
