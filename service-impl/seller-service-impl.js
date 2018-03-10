@@ -108,7 +108,7 @@ module.exports.update = (sellerId, partyReq, next) => {
 			}
 		  	if(partyReq.authentication && partyReq.authentication.authToken){
 				let plainPass = partyReq.authentication.authToken;
-				pty.authentication.authToken = apiUtils.encyptAuthToken(plainPass);
+				pty.authentication.authToken = plainPass;
 			}
 
 			if(partyReq.location){
@@ -123,34 +123,6 @@ module.exports.update = (sellerId, partyReq, next) => {
 				}
 				else
 				{
-					/*let res = new FranchiseeRequest(franchiseeResponse);
-					franchiseeScheduleRepository.getScheduleBysellerId(sellerId, function(err, ScheduleResponse){
-		  			if (err){
-			  			next(err);
-			  		}else{
-			  			if(partyReq.franchiseeSchedule && partyReq.franchiseeSchedule.length > 0){
-
-							for (let i = 0; i < partyReq.franchiseeSchedule.length; i++){
-								if(!partyReq.franchiseeSchedule[i]._id){
-									ScheduleResponse.schedule.push(partyReq.franchiseeSchedule[i]);
-								}else{
-									if(partyReq.franchiseeSchedule[i].menuOverride)
-									partyReq.franchiseeSchedule[i].menuOverride=ScheduleResponse.schedule.menuOverride;
-									ScheduleResponse.schedule.id(partyReq.franchiseeSchedule[i]._id).remove();
-									ScheduleResponse.schedule.push(partyReq.franchiseeSchedule[i]);
-								}
-							}
-						}
-		  				franchiseeScheduleRepository.update(ScheduleResponse, function(err, result){
-		  					if (err){
-			  					next(err);
-					  		}else{
-					  			res.franchiseeSchedule=ScheduleResponse.schedule;
-			  					next(null, res);
-					  		}
-		  				});
-			  		}
-	  			});*/
 	  			next(null, resSeller);
 			}
 			});
