@@ -9,7 +9,7 @@ module.exports = {
 	},
 	notification:{
 		sellersKey:'AAAA3eYd9oo:APA91bGeXljzhB9Gl_newKddivGcTfDj6IxYCIlq1bTSaW4A6YbVmq4gt5lNwLK88bbyVkmHeE0O4NeiuuQMjvjTRGhsiKWvM9Jz0ae2fz4qWKY9--x61sMAQD6xx3UK-V_RYZhD9Xc-',
-		customersKey:'AAAAtXKqCeg:APA91bH8e2cfENcvQGz5KqvCFT0JTj7fDTQmEWiDHd4YhXNDxcgnuOx_RwwcXnu_VxNTsUgDLfDe4vb-9LMXmcOqv_C7jmM3ChAhPPQwUo-qiHzDxL0H5yjpXkraAZtt17rHcHH6Y2Tp',
+		customersKey:'AAAAtXKqCeg:APA91bEsNkATiGIfRfJ4sYV2MmZVBjSnlPo3-zaEtxvgUgm7TijxZm6UPF1Uby-A2a7gdkjbU8WyamUYJrxAPPaK4g5n-3QKeFOpyLmb18fsgXekmPkNUSs9kmh9sQIjYllWhegi6LPM',
 	},
 	db:{
 		url:'mongodb://pikazza:AggarWal123@35.200.191.243:21215/agarwal-db',
