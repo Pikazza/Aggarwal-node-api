@@ -164,6 +164,8 @@ module.exports.login = (loginRequest, next) => {
 		}
 		else if(! result.verified) {
 			next(new PasswordNotFound(" Your Account not verified/password expired for "+loginRequest.authId));
+		}else if( result.status != "ACTIVE" ) {
+			next(new PasswordNotFound("Login Blocked for the user "+loginRequest.authId));
 		}  else {
 				result.device.deviceType=loginRequest.deviceType;
 				result.device.deviceToken=loginRequest.deviceToken;

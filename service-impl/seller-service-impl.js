@@ -154,6 +154,8 @@ module.exports.loginV20 = (loginRequest, next) => {
 			next(new PartyNotFoundError("There is no Records found for Franchisee id "+loginRequest.authId));
 		} else if( loginRequest.authToken != result.authentication.authToken ) {
 			next(new PasswordNotFound("Given Password is Not Matched for "+loginRequest.authId));
+		}else if( result.status != "ACTIVE" ) {
+			next(new PasswordNotFound("Login Blocked for the user "+loginRequest.authId));
 		} else {
 				//let pty= new franchisee(result);
 				result.device.deviceType=loginRequest.deviceType;
